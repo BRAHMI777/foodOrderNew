@@ -3,7 +3,7 @@ package com.abc.simplehouse.service;
 
 import java.util.List;
 
-import com.abc.simplehouse.model.FoodItemModel;
+import com.abc.simplehouse.entity.FoodItem;
 
 
 /**
@@ -20,21 +20,21 @@ public interface FoodItemsService {
 	 * @param item-The food item object
 	 * 
 	 */
-	public void save(FoodItemModel item);
+	public void save(FoodItem item);
 
 	/**
 	 * getById- This method is used to get item by id.
 	 * @param foodItemId
 	 * @return FoodItemModel 
 	 */
-	public FoodItemModel getById(int foodItemId);
+	public FoodItem getById(int foodItemId);
 	
 	/**
 	 * getByName- This method is used to get item by name.
 	 * @param foodItemName
 	 * @return FoodItemModel 
 	 */
-	//public FoodItemModel getByName(String foodItemName);
+	//public FoodItem getByName(String foodItemName);
 
 	
 	/**
@@ -57,6 +57,8 @@ public interface FoodItemsService {
 	 * @param itemId
 	 * 
 	 */
-	public List<FoodItemModel> getAllItems();
+	public List<FoodItem> getAllItems();
+
+	
 
 }

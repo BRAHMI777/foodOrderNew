@@ -16,7 +16,7 @@ public class OrderItem {
 	private int quantity;
 	
 	@OneToOne
-	private FoodItem items;
+	private FoodItem foodItem;
 	
 	@ManyToOne
 	private Order order;
@@ -37,12 +37,13 @@ public class OrderItem {
 		this.quantity = quantity;
 	}
 
-	public FoodItem getItems() {
-		return items;
+	
+	public FoodItem getFoodItem() {
+		return foodItem;
 	}
 
-	public void setItems(FoodItem items) {
-		this.items = items;
+	public void setFoodItem(FoodItem foodItem) {
+		this.foodItem = foodItem;
 	}
 
 	public Order getOrder() {

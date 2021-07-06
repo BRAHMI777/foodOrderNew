@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.abc.simplehouse.model.FoodItemModel;
+import com.abc.simplehouse.entity.FoodItem;
 import com.abc.simplehouse.service.FoodItemsService;
 
 
@@ -33,32 +33,32 @@ public class FoodItemController {
 	private static final Logger LOGGER =LoggerFactory.getLogger(FoodItemController.class);
 	
 	@PostMapping("/additem")
-	public ResponseEntity<?> addItem(@RequestBody FoodItemModel item)
+	public ResponseEntity<?> addItem(@RequestBody FoodItem foodItem)
 	{
-		LOGGER.info("Path:/fooditems/additem");
+		LOGGER.info("Path:http://localhost:8081/fooditems/additem");
 		LOGGER.info("Save Item method is started");
-		foodItemsService.save(item);
+		foodItemsService.save(foodItem);
 		ResponseEntity<String> responseEntity = new ResponseEntity<>("Item saved Successfully",HttpStatus.CREATED);
-		LOGGER.info("Save Item method is started");
+		LOGGER.info("Save Item method is successfully completed");
 		return responseEntity;		
 	}
 	
 	@GetMapping("/{id}")
-	public FoodItemModel fetchById(@PathVariable("id") int foodId)
+	public FoodItem fetchById(@PathVariable("id") int foodItemId)
 	{
-		LOGGER.info("Path:/fooditems/{id}");
+		LOGGER.info("Path:http://localhost:8081/fooditems/{id}");
 		LOGGER.info("GetById method is started");
-		FoodItemModel foodItems= foodItemsService.getById(foodId);
+		FoodItem foodItems= foodItemsService.getById(foodItemId);
 		LOGGER.info("GetById method is successfully completed");
 		return foodItems;
 	}
 	
 	@GetMapping("/allitems")
-	public List<FoodItemModel> fetchAll()
+	public List<FoodItem> fetchAll()
 	{
-		LOGGER.info("Path:/fooditems/allitems");
+		LOGGER.info("Path:http://localhost:8081/fooditems/allitems");
 		LOGGER.info("getAllItems method is started");
-		List<FoodItemModel> list=new ArrayList<>();
+		List<FoodItem> list=new ArrayList<>();
 		list=foodItemsService.getAllItems();
 		LOGGER.info("GetAllItems method is successfully completed");
 		return list;
@@ -66,16 +66,17 @@ public class FoodItemController {
 	
 	
 	
-//	
+	
 //	@GetMapping("/{name}")
-//	public FoodItemModel fetchByName(@PathVariable("name") String foodItemName)
+//	public FoodItem fetchByName(@PathVariable("name") String foodItemName)
 //	{
-//		FoodItemModel foodItems= foodItemsService.getByName(foodItemName);
-//		return foodItems;
+//		FoodItem foodItem= foodItemsService.getByName(foodItemName);
+//		return foodItem;
 //	}
 //	
+//	
 	
-	@DeleteMapping("/deleteitem/{id}")
+	@DeleteMapping("http://localhost:8081/deleteitem/{id}")
 	public ResponseEntity<?> deleteItem(@PathVariable("id") int itemId)
 	{
 		LOGGER.info("Path:/fooditems/deleteitem/{id}");
@@ -86,7 +87,7 @@ public class FoodItemController {
 		return responseEntity;
 	}
 	
-	@PutMapping("/updateitem/{id}")
+	@PutMapping("http://localhost:8081/updateitem/{id}")
 	public ResponseEntity<?> updateItem(@PathVariable("id") int itemId)
 	{
 		LOGGER.info("Path:/fooditems/updateitem/{id}");
