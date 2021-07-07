@@ -6,6 +6,7 @@ package com.abc.simplehouse.service;
 import java.util.List;
 
 import com.abc.simplehouse.entity.OrderItem;
+import com.abc.simplehouse.payload.OrderItemPayload;
 
 /**
  * @author BrahmanandaReddy
@@ -19,7 +20,7 @@ public interface OrderItemService {
 	 * @param orderItem
 	 * 06-Jul-2021
 	 */
-	public void save(OrderItem orderItem);
+	public void save(OrderItemPayload orderItemPayload);
 
 	/**
 	 * This method is used to get all the products.

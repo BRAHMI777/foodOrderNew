@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.abc.simplehouse.entity.Order;
+import com.abc.simplehouse.payload.OrderPayload;
 import com.abc.simplehouse.service.OrderService;
 
 @RestController
@@ -34,11 +35,11 @@ public class OrderController {
 	 * 06-Jul-2021
 	 */
 	@PostMapping("/addorder")
-	public ResponseEntity<?> createOrder(@RequestBody Order order)
+	public ResponseEntity<?> createOrder(@RequestBody OrderPayload orderPayload)
 	{
 		LOGGER.info("Path:/order/addorder");
 		LOGGER.info("createorder method is started");
-		orderService.createOrder(order);
+		orderService.createOrder(orderPayload);
 		ResponseEntity<String> responseEntity=new ResponseEntity<>("Order created successfully.",HttpStatus.CREATED);
 		LOGGER.info("createOrder method is started");
 		return responseEntity;

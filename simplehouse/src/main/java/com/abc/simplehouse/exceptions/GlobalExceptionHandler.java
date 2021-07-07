@@ -15,7 +15,7 @@ public class GlobalExceptionHandler {
 	 * 04-Jul-2021
 	 */
 	@ExceptionHandler(ItemAlreadyExistingException.class)
-	public ResponseEntity<?> handleProductAlredyExistingException(Exception e) {
+	public ResponseEntity<?> ProductAlredyExistingException(Exception e) {
 		return new ResponseEntity<String>(e.getMessage(),HttpStatus.BAD_REQUEST);
 	}
 	
@@ -68,4 +68,93 @@ public class GlobalExceptionHandler {
 		return new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
 	}
 
+	
+	/**
+	 * This method handles CustomerAlreadyExistsException.
+	 * @param e
+	 * @return ResponseEntity
+	 * 06-Jul-2021
+	 */
+	@ExceptionHandler(CustomerAlreadyExistsException.class)
+	public ResponseEntity<?> CustomerAlreadyExistsException(Exception e)
+	{
+		return new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
+	}
+	
+	
+	/**
+	 * This method handles CustomerNotFoundException.
+	 * @param e
+	 * @return ResponseEntity
+	 * 06-Jul-2021
+	 */
+	@ExceptionHandler(CustomerNotFoundException.class)
+	public ResponseEntity<?> CustomerNotFoundException(Exception e)
+	{
+		return new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
+	}
+	
+	
+	/**
+	 * This method handles PaymentAlreadyExistsException.
+	 * @param e
+	 * @return ResponseEntity
+	 * 06-Jul-2021
+	 */
+	@ExceptionHandler(PaymentDetailsNotFoundException.class)
+	public ResponseEntity<?> PaymentDetailsNotFoundException(Exception e)
+	{
+		return new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
+	}
+	
+	/**
+	 * This method handles PaymentAlreadyExistsException.
+	 * @param e
+	 * @return ResponseEntity
+	 * 06-Jul-2021
+	 */
+	@ExceptionHandler(PaymentAlreadyExistsException.class)
+	public ResponseEntity<?> PaymentAlreadyExistsException(Exception e)
+	{
+		return new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
+	}
+	
+	/**
+	 * This method handles PaymentAlreadyExistsException.
+	 * @param e
+	 * @return ResponseEntity
+	 * 06-Jul-2021
+	 */
+	@ExceptionHandler(CartItemNotFoundException.class)
+	public ResponseEntity<?> CartItemNotFoundException(Exception e)
+	{
+		return new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
+	}
+
+	
+	/**
+	 * This method handles PaymentAlreadyExistsException.
+	 * @param e
+	 * @return ResponseEntity
+	 * 06-Jul-2021
+	 */
+	@ExceptionHandler(CartAlreadyExistingException.class)
+	public ResponseEntity<?> CartAlreadyExistingException(Exception e)
+	{
+		return new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
+	}
+	
+	/**
+	 * This method handles PaymentAlreadyExistsException.
+	 * @param e
+	 * @return ResponseEntity
+	 * 06-Jul-2021
+	 */
+	@ExceptionHandler(CartNotFoundException.class)
+	public ResponseEntity<?> CartNotFoundException(Exception e)
+	{
+		return new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
+	}
+	
+	
 }

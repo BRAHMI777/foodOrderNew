@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.abc.simplehouse.entity.OrderItem;
+import com.abc.simplehouse.payload.OrderItemPayload;
 import com.abc.simplehouse.service.OrderItemService;
 
 /**
@@ -37,11 +38,11 @@ public class OrderItemController {
 private static final Logger LOGGER =LoggerFactory.getLogger(FoodItemController.class);
 	
 	@PostMapping("/additem")
-	public ResponseEntity<?> addItem(@RequestBody OrderItem orderItem)
+	public ResponseEntity<?> addItem(@RequestBody OrderItemPayload orderItemPayload)
 	{
 		LOGGER.info("Path:http://localhost:808/orderitems/additem");
 		LOGGER.info("Save Item method is started");
-		orderItemService.save(orderItem);
+		orderItemService.save(orderItemPayload);
 		ResponseEntity<String> responseEntity = new ResponseEntity<>("OrderItem saved Successfully",HttpStatus.CREATED);
 		LOGGER.info("Save Item method is started");
 		return responseEntity;		

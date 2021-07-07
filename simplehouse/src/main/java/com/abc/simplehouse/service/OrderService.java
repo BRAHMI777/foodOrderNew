@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import com.abc.simplehouse.entity.Order;
 import com.abc.simplehouse.exceptions.OrderNotFoundException;
+import com.abc.simplehouse.payload.OrderPayload;
 
 public interface OrderService {
 	
@@ -13,7 +14,7 @@ public interface OrderService {
 	 * @param order
 	 * 06-Jul-2021
 	 */
-	public void createOrder(Order order);
+	public void createOrder(OrderPayload orderPayload);
 
 	/**
 	 * This method is used to get all orders.

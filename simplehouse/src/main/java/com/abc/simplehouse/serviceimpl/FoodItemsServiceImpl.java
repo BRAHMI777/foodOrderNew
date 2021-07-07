@@ -62,7 +62,7 @@ public class FoodItemsServiceImpl implements FoodItemsService {
 		if(foodItem.isEmpty())
 		{
 			LOGGER.error("ItemNotFoundException is encounterd");
-			throw new ItemNotFoundException("Item not found with id "+foodItemId);
+			throw new ItemNotFoundException("Item not found with foodItem id "+foodItemId);
 		}		
 		LOGGER.info("FoodItem fetched successfully");
 		FoodItem foodItems=foodItem.get();

@@ -33,7 +33,7 @@ public class FoodItemController {
 	private static final Logger LOGGER =LoggerFactory.getLogger(FoodItemController.class);
 	
 	@PostMapping("/additem")
-	public ResponseEntity<?> addItem(@RequestBody FoodItem foodItem)
+	public ResponseEntity<String> addItem(@RequestBody FoodItem foodItem)
 	{
 		LOGGER.info("Path:http://localhost:8081/fooditems/additem");
 		LOGGER.info("Save Item method is started");

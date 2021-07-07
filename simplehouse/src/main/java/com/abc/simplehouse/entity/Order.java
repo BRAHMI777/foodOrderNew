@@ -26,15 +26,6 @@ public class Order {
 	
 	private double totalCost;
 	
-
-	public double getTotalCost() {
-		return totalCost;
-	}
-
-	public void setTotalCost(double totalCost) {
-		this.totalCost = totalCost;
-	}
-
 	@OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
 	private List<OrderItem> orderItems = new ArrayList<>();
 
@@ -44,6 +35,16 @@ public class Order {
 
 	@OneToOne
 	private Payment payment;
+	
+	public double getTotalCost() {
+		return totalCost;
+	}
+
+	public void setTotalCost(double totalCost) {
+		this.totalCost = totalCost;
+	}
+
+	
 
 	public int getId() {
 		return id;

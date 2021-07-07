@@ -16,8 +16,7 @@ public class Customer {
 	
 	@Id
 	private int customerId;
-	private String customerFirstName;
-	private String customerLastName;
+	private String customerName;
 	private String address;
 	private String customerEmail;
 	private String phoneNumber;
@@ -28,6 +27,9 @@ public class Customer {
 	
 	@OneToMany(mappedBy="customer",cascade=CascadeType.ALL)
     private List<Order> order=new ArrayList<>();
+	
+	@OneToMany(mappedBy="customer",cascade=CascadeType.ALL)
+	private List<OrderItem> orderItem=new ArrayList<>();
 	
 	public FoodCart getCart() {
 		return cart;
@@ -47,17 +49,11 @@ public class Customer {
 	public void setCustomerId(int customerId) {
 		this.customerId = customerId;
 	}
-	public String getCustomerFirstName() {
-		return customerFirstName;
+	public String getCustomerName() {
+		return customerName;
 	}
-	public void setCustomerFirstName(String customerFirstName) {
-		this.customerFirstName = customerFirstName;
-	}
-	public String getCustomerLastName() {
-		return customerLastName;
-	}
-	public void setCustomerLastName(String customerLastName) {
-		this.customerLastName = customerLastName;
+	public void setCustomerName(String customerFirstName) {
+		this.customerName = customerFirstName;
 	}
 	public String getAdress() {
 		return address;
