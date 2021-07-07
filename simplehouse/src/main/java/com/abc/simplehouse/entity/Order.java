@@ -12,14 +12,16 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "ORDER_TBL")
 public class Order {
 	
 	@Id
+	@NotNull(message="order id should be present")
 	private int id;
-	
+	@NotNull(message="order date should be present")
 	private LocalDate orderDate;   //2007-12-03.
 	
 	private double totalCost;
