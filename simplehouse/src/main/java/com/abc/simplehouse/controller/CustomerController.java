@@ -73,5 +73,15 @@ public class CustomerController {
 		ResponseEntity<String> responseEntity= new ResponseEntity<>(" Customer Details updated ",HttpStatus.CREATED);
 		LOGGER.info("Update method is successfully completed.");
 		return responseEntity;
-}
+	}
+	
+	@GetMapping("/findbyemail/{customerEmail}")
+	public Customer findCustomerByEmail(@Valid  @PathVariable String customerEmail){
+		
+		Customer customer = customerService.findCustomerByEmail(customerEmail);
+		LOGGER.info("findByEmail method is successfully completed.");
+
+		return customer;
+	}
+
 }

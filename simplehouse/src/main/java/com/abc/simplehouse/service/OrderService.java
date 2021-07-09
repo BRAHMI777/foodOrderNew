@@ -5,7 +5,6 @@ import java.util.Optional;
 
 import com.abc.simplehouse.entity.Order;
 import com.abc.simplehouse.exceptions.OrderNotFoundException;
-import com.abc.simplehouse.payload.OrderPayload;
 
 public interface OrderService {
 	
@@ -14,7 +13,7 @@ public interface OrderService {
 	 * @param order
 	 * 06-Jul-2021
 	 */
-	public void createOrder(OrderPayload orderPayload);
+	public void createOrder(int foodCartId,double paymentAmount);
 
 	/**
 	 * This method is used to get all orders.
@@ -38,6 +37,13 @@ public interface OrderService {
 	 * 06-Jul-2021
 	 */
 	public void updateOrderById(int orderId);
+
+	/**
+	 * This method is used to get the status of the order.
+	 * @param orderId
+	 * 06-Jul-2021
+	 */
+	public String getOrderStatus(int orderId);
 	
 
 }

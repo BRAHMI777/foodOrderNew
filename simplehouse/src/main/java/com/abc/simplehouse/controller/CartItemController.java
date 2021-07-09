@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.abc.simplehouse.entity.CartItems;
+import com.abc.simplehouse.payload.CartItemsPayload;
 import com.abc.simplehouse.service.CartItemService;
 
 /**
@@ -36,10 +37,10 @@ public class CartItemController {
 	private static final Logger LOGGER = LoggerFactory.getLogger(CartItemController.class);
 
 	@PostMapping("/additem")
-	public ResponseEntity<?> addItem(@RequestBody CartItems item) {
+	public ResponseEntity<String> addItem(@RequestBody CartItemsPayload cartItemsPayload) {
 		LOGGER.info("Path:/cartitems/additemstocart");
 		LOGGER.info("Save cart items method is started");
-		cartItemsService.save(item);
+		cartItemsService.save(cartItemsPayload);
 		ResponseEntity<String> responseEntity = new ResponseEntity<>("Cart Items saved successfully",
 				HttpStatus.CREATED);
 		LOGGER.info("save cart items method is successfully");
@@ -56,7 +57,7 @@ public class CartItemController {
 	}
 
 	@DeleteMapping("/deleteitem/{id}")
-	public ResponseEntity<?> deleteCartItems(@PathVariable("id") int cartItemId) {
+	public ResponseEntity<String> deleteCartItems(@PathVariable("id") int cartItemId) {
 		LOGGER.info("Path:/cartitems/deletecartitem/{id}");
 		LOGGER.info("deletecart method has started");
 		cartItemsService.deleteCartItems(cartItemId);
@@ -67,7 +68,7 @@ public class CartItemController {
 	}
 
 	@PutMapping("/updateitem/{id}")
-	public ResponseEntity<?> updateCartItems(@PathVariable("id") CartItems cartItemId) {
+	public ResponseEntity<String> updateCartItems(@PathVariable("id") CartItems cartItemId) {
 		LOGGER.info("Path:/cartitems/updatecartitems/{id}");
 		LOGGER.info("updateCartItems method is started");
 		cartItemsService.updateCartItems(cartItemId);

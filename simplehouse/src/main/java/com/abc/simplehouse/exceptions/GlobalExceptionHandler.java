@@ -120,7 +120,7 @@ public class GlobalExceptionHandler {
 	}
 	
 	/**
-	 * This method handles PaymentAlreadyExistsException.
+	 * This method handles CartItemNotFoundException.
 	 * @param e
 	 * @return ResponseEntity
 	 * 06-Jul-2021
@@ -133,7 +133,7 @@ public class GlobalExceptionHandler {
 
 	
 	/**
-	 * This method handles PaymentAlreadyExistsException.
+	 * This method handles CartAlreadyExistingException.
 	 * @param e
 	 * @return ResponseEntity
 	 * 06-Jul-2021
@@ -145,7 +145,7 @@ public class GlobalExceptionHandler {
 	}
 	
 	/**
-	 * This method handles PaymentAlreadyExistsException.
+	 * This method handles CartNotFoundException.
 	 * @param e
 	 * @return ResponseEntity
 	 * 06-Jul-2021
@@ -156,5 +156,30 @@ public class GlobalExceptionHandler {
 		return new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
 	}
 	
+	
+	/**
+	 * This method handles InvalidCustomerException.
+	 * @param e
+	 * @return ResponseEntity
+	 * 06-Jul-2021
+	 */
+	@ExceptionHandler(InvalidCustomerException.class)
+	public ResponseEntity<?> InvalidCustomerException(Exception e)
+	{
+		return new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
+	}
+	
+
+	/**
+	 * This method handles CredentialsNotValidException.
+	 * @param e
+	 * @return ResponseEntity
+	 * 06-Jul-2021
+	 */
+	@ExceptionHandler(CredentialsNotValidException.class)
+	public ResponseEntity<?> CredentialsNotValidException(Exception e)
+	{
+		return new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
+	}
 	
 }

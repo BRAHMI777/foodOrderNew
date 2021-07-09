@@ -5,6 +5,8 @@ package com.abc.simplehouse.entity;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 import javax.persistence.Table;
 
 /**
@@ -13,12 +15,14 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "LOGIN_TBL")
+
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS) 
 public class Login {
 	 @Id
 	 private int customerId;
-	 private String customerEmail;
+	 private String customerName;
 	 private String customerPassword;
-	 /**
+	/**
 	 * @return the customerId
 	 */
 	public int getCustomerId() {
@@ -31,16 +35,16 @@ public class Login {
 		this.customerId = customerId;
 	}
 	/**
-	 * @return the customerEmail
+	 * @return the customerName
 	 */
-	public String getCustomerEmail() {
-		return customerEmail;
+	public String getCustomerName() {
+		return customerName;
 	}
 	/**
-	 * @param customerEmail the customerEmail to set
+	 * @param customerName the customerName to set
 	 */
-	public void setCustomerEmail(String customerEmail) {
-		this.customerEmail = customerEmail;
+	public void setCustomerName(String customerName) {
+		this.customerName = customerName;
 	}
 	/**
 	 * @return the customerPassword
@@ -54,6 +58,6 @@ public class Login {
 	public void setCustomerPassword(String customerPassword) {
 		this.customerPassword = customerPassword;
 	}
-	
-
+	 
+	 
 }

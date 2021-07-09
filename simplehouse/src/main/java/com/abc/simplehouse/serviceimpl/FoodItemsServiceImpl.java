@@ -74,7 +74,7 @@ public class FoodItemsServiceImpl implements FoodItemsService {
 	 */
 //	@Override
 //	public FoodItem getByName(String foodItemName) {
-//		Optional<FoodItem> foodItem= foodItemsRepository.findFoodItemByName(foodItemName);
+//		Optional<FoodItem> foodItem= foodItemsRepository.findByFoodItemName(foodItemName);
 //		if(foodItem.isEmpty())
 //		{
 //			throw new ItemNotFoundException("Item Not Found With Name "+foodItemName);

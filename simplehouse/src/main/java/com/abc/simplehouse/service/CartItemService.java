@@ -7,6 +7,7 @@ import java.util.Optional;
 
 import com.abc.simplehouse.entity.CartItems;
 import com.abc.simplehouse.exceptions.CartItemNotFoundException;
+import com.abc.simplehouse.payload.CartItemsPayload;
 
 /**
  * This Service interface contains all the methods of Cart Items.
@@ -20,7 +21,7 @@ public interface CartItemService {
 	 * 
 	 * @param item
 	 */
-	public void save(CartItems cartitems);
+	public void save(CartItemsPayload cartItemsPayload);
 
 	/**
 	 * getById - This method is used to get cart items by id.

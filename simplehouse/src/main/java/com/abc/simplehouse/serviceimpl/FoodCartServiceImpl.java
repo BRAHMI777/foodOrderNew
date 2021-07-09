@@ -10,9 +10,12 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.abc.simplehouse.entity.Customer;
 import com.abc.simplehouse.entity.FoodCart;
 import com.abc.simplehouse.exceptions.CartAlreadyExistingException;
 import com.abc.simplehouse.exceptions.CartNotFoundException;
+import com.abc.simplehouse.exceptions.CustomerNotFoundException;
+import com.abc.simplehouse.repository.CustomerRepository;
 import com.abc.simplehouse.repository.FoodCartRepository;
 import com.abc.simplehouse.service.FoodCartService;
 
@@ -26,28 +29,41 @@ import com.abc.simplehouse.service.FoodCartService;
 public class FoodCartServiceImpl implements FoodCartService {
 	@Autowired
 	private FoodCartRepository foodCartRepository;
+	
+	@Autowired
+	private CustomerRepository customerRepository;
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(FoodCartService.class);
 
+	
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void save(FoodCart cart) throws CartAlreadyExistingException {
+	public void save(int customerId) throws CartAlreadyExistingException {
 		LOGGER.info("Save Cart method is started");
-		Optional<FoodCart> op = foodCartRepository.findById(cart.getCartId());
-		if (op.isPresent()) {
-			LOGGER.error("ItemAlreadyExistingException is encounterd");
-			throw new CartAlreadyExistingException("Cart already existing with Id "+cart.getCartId());
 
-		} else {
 			FoodCart foodCart = new FoodCart();
-			foodCart.setCartId(cart.getCartId());
-			foodCart.setCartItems(cart.getCartItems());
-			foodCart.setCustomer(cart.getCustomer());
-			foodCartRepository.save(cart);
-			LOGGER.info("FoodItem saved successfully");
-		}
+			
+			Optional<Customer> optionalCustomer=customerRepository.findById(customerId);
+			if(optionalCustomer.isEmpty())
+				throw new CustomerNotFoundException("Customer not found with id "+customerId);
+			Customer customer=optionalCustomer.get();
+		
+			Optional<FoodCart> optionalCustomerFoodCart=Optional.ofNullable(customer.getCart());
+			if(optionalCustomerFoodCart.isPresent())
+			{
+				FoodCart customerFoodCart=optionalCustomerFoodCart.get();
+				throw new CartAlreadyExistingException("This customer already contains a cart "+customerFoodCart.getCartId());
+			}
+			
+			
+			foodCart.setCustomer(customer);
+			foodCartRepository.save(foodCart);
+			LOGGER.info("Foodcart saved successfully");
+			customer.setCart(foodCart);
+			customerRepository.save(customer);
+			
 	}
 
 	/**

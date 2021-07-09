@@ -10,18 +10,11 @@ package com.abc.simplehouse.payload;
 public class OrderItemPayload {
 	
 		
-	private int quantity;
+	  private int quantity;
 	  private int foodItemId;
 	  private int OrderId;
 	  private int customerId;
-	 
-//	  public int getOrderItemId() {
-//			return orderItemId;
-//		}
-//		public void setOrderItemId(int orderItemId) {
-//			this.orderItemId = orderItemId;
-//		}
-//	  
+	
 	public int getQuantity() {
 		return quantity;
 	}

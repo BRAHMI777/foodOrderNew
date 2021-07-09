@@ -1,21 +1,24 @@
 package com.abc.simplehouse.serviceimpl;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.abc.simplehouse.entity.CartItems;
 import com.abc.simplehouse.entity.Customer;
+import com.abc.simplehouse.entity.FoodCart;
+import com.abc.simplehouse.entity.FoodItem;
 import com.abc.simplehouse.entity.Order;
 import com.abc.simplehouse.entity.OrderItem;
 import com.abc.simplehouse.entity.Payment;
-import com.abc.simplehouse.exceptions.OrderAlreadyExistingException;
+import com.abc.simplehouse.exceptions.CartNotFoundException;
 import com.abc.simplehouse.exceptions.OrderNotFoundException;
-import com.abc.simplehouse.payload.OrderPayload;
-import com.abc.simplehouse.repository.CustomerRepository;
-import com.abc.simplehouse.repository.FoodItemRepository;
+import com.abc.simplehouse.repository.CartItemRepository;
+import com.abc.simplehouse.repository.FoodCartRepository;
 import com.abc.simplehouse.repository.OrderItemRepository;
 import com.abc.simplehouse.repository.OrderRepository;
 import com.abc.simplehouse.repository.PaymentRepository;
@@ -27,51 +30,88 @@ public class OrderServiceImpl implements OrderService {
 	@Autowired
 	private OrderRepository orderRepository;
 	
-//	@Autowired
-//	private OrderItemRepository orderItemRepository;
-//	
-//	@Autowired
-//	private FoodItemRepository foodItemRepository;
-	
 	@Autowired
-	private CustomerRepository customerRepository;
+	private OrderItemRepository orderItemRepository;
+
 	
 	@Autowired
 	private PaymentRepository paymentRepository;
 	
+	@Autowired
+	private CartItemRepository cartItemRepository;
+	
+	@Autowired
+	private FoodCartRepository foodCartRepository;
+
+	
 	/**
 	 * {@inheritDoc}
 	 */
-	@Override
-	public void createOrder(OrderPayload orderPayload) throws OrderAlreadyExistingException {
-//		//Optional<Order> optionalOrder= orderRepository.findById(order.getId());
-//		if(optionalOrder.isEmpty())
-//		{
-//		orderRepository.save(order);
-//		}
-//		else
-//		{
-//			throw new OrderAlreadyExistingException("The Order is already existing with id "+order.getId());
-//		}
-		Order order=new Order();
-		Optional<Customer> optionalCustomer=customerRepository.findById(orderPayload.getCustomerId());
-		Customer customer=optionalCustomer.get();
-		
-		Optional<Payment> optionalPayment=paymentRepository.findById(orderPayload.getPaymentId());
-		Payment payment=optionalPayment.get();
-		
-		List<OrderItem> list=new ArrayList<>();
 	
+	@Override
+	public void createOrder(int foodCartId,double paymentAmount) {
+
+		Order order=new Order();
+		
+		Optional<FoodCart> optionalFoodCart=foodCartRepository.findById(foodCartId);
+		if(optionalFoodCart.isEmpty())
+			throw new CartNotFoundException("FoodCart not found with Id "+foodCartId);
+		
+		FoodCart foodCart=optionalFoodCart.get();
+		
+		Customer customer=foodCart.getCustomer();
+		
+		List<CartItems> cartItemsList=foodCart.getCartItems();
+		double totalCost=0;
+		Iterator<CartItems> i=cartItemsList.iterator();
+	
+		List<OrderItem> orderItemList=new ArrayList<>();
+		while(i.hasNext())
+		{	
+			OrderItem orderItem=new OrderItem();
+			CartItems cartItem=i.next();
+			FoodItem foodItem=cartItem.getFoodItem();
+			totalCost=totalCost+(foodItem.getItemPrice()*cartItem.getQuantity());
+			orderItem.setFoodItem(foodItem);
+			orderItem.setQuantity(cartItem.getQuantity());
+			orderItemList.add(orderItem);
+			orderItemRepository.save(orderItem);
+		
+		}
+		
+		Payment payment=new Payment();
+		payment.setPaymentAmount(paymentAmount);
+		if(paymentAmount>=totalCost)
+		{
+			payment.setPaymentStatus("success");
+		}
+		else
+		{
+			payment.setPaymentStatus("fail");
+		}
+		paymentRepository.save(payment);
+		
+		
+		order.setTotalCost(totalCost);
 		order.setCustomer(customer);
 		order.setPayment(payment);
-		order.setOrderItems(list);
-		order.setId(orderPayload.getOrderId());
-		order.setTotalCost(1000);
-		order.setOrderDate(orderPayload.getOrderDate());
 		orderRepository.save(order);
 		
+		payment.setOrder(order);
+		paymentRepository.save(payment);
+		Iterator<OrderItem> i1=orderItemList.iterator();
+		while(i1.hasNext())
+		{
+			OrderItem orderItems=i1.next();
+			orderItems.setOrder(order);
+			orderItemRepository.save(orderItems);
+		}
+		
+		cartItemRepository.deleteAll();
 	}
-
+	
+	
+	
 	/**
 	 * {@inheritDoc}
 	 */
@@ -120,6 +160,26 @@ public class OrderServiceImpl implements OrderService {
 		orderRepository.save(order);
 		}
 		
+	}
+
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public String getOrderStatus(int orderId) {
+		Optional<Order> optionalOrder=orderRepository.findById(orderId);
+		Order order=optionalOrder.get();
+		Payment payment=order.getPayment();
+		String s="success";
+		if(s.equals(payment.getPaymentStatus()))
+		{
+			return "Order placed successfylly.";
+		}
+		else
+		{
+		   return "Payment is failed. Please place the order again.";
+		}
 	}
 
 }

@@ -9,7 +9,7 @@ import com.abc.simplehouse.exceptions.CustomerNotFoundException;
 
 
 /**
- * @author midhh
+ * @author madhuBabu
  *
  */
 
@@ -41,6 +41,13 @@ public interface CustomerService {
 	 * @throws CustomerNotFoundException
 	 */
 	public void updateCustomer(int customerId) throws CustomerNotFoundException;
+	
+	/**
+	 * This Method is used to grt customer details by using customerEmail.
+	 * @param customer
+	 * @throws CustomerNotFoundException
+	 */
+	public Customer findCustomerByEmail(String customerEmail) throws CustomerNotFoundException;
 	
 	
 	

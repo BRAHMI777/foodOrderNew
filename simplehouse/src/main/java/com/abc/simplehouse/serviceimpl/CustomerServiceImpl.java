@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.abc.simplehouse.entity.Customer;
+import com.abc.simplehouse.entity.FoodCart;
 import com.abc.simplehouse.exceptions.CustomerAlreadyExistsException;
 import com.abc.simplehouse.exceptions.CustomerNotFoundException;
 import com.abc.simplehouse.repository.CustomerRepository;
@@ -43,10 +44,20 @@ public class CustomerServiceImpl implements CustomerService{
 			LOGGER.error("CustomerAlreadyExistsException is encountered");
 			throw new CustomerAlreadyExistsException("Customer already existing with id: "+ customer.getCustomerId());
 		}
+		
+		Optional<Customer> optionalCustomer1 = customerRepository.findByCustomerEmail(customer.getCustomerEmail());
+		if(optionalCustomer1.isPresent())
+		{
+			throw new CustomerAlreadyExistsException("Customer already existing with this Email: "+ customer.getCustomerEmail());
+		}
 		else 
 		{
+		FoodCart foodCart=new FoodCart();
+		foodCart.setCustomer(customer);	
+		customer.setCart(foodCart);
 		customerRepository.save(customer);
 		LOGGER.info("Customer Registered successfully");
+		
 		}
 	}
 
@@ -91,6 +102,27 @@ public class CustomerServiceImpl implements CustomerService{
 			LOGGER.error("CustomerNotFoundException is encountered.");
 			throw new CustomerNotFoundException("Cannot find customer with this Id "+id);
 		}		
+		
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Customer findCustomerByEmail(String customerEmail) throws CustomerNotFoundException{
+	
+		Optional<Customer> customer = customerRepository.findByCustomerEmail(customerEmail);
+		if(customer.isPresent()) {
+			
+			customerRepository.findByCustomerEmail(customerEmail);
+			
+		}
+		else {
+			
+			throw new CustomerNotFoundException("Cannot find customer with this email: "+customerEmail);
+		}
+		return customer.get();
+		
 		
 	}
 

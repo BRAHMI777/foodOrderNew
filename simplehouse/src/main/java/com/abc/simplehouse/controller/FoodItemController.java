@@ -73,13 +73,13 @@ public class FoodItemController {
 //		FoodItem foodItem= foodItemsService.getByName(foodItemName);
 //		return foodItem;
 //	}
-//	
-//	
 	
-	@DeleteMapping("http://localhost:8081/deleteitem/{id}")
+	
+	
+	@DeleteMapping("deleteitem/{id}")
 	public ResponseEntity<?> deleteItem(@PathVariable("id") int itemId)
 	{
-		LOGGER.info("Path:/fooditems/deleteitem/{id}");
+		LOGGER.info("http://localhost:8081/deleteitem/{id}");
 		LOGGER.info("deleteItem method is started");
 		foodItemsService.deleteItem(itemId);
 		ResponseEntity<String> responseEntity = new ResponseEntity<>("Item deleted Successfully",HttpStatus.OK);
@@ -87,10 +87,10 @@ public class FoodItemController {
 		return responseEntity;
 	}
 	
-	@PutMapping("http://localhost:8081/updateitem/{id}")
+	@PutMapping("updateitem/{id}")
 	public ResponseEntity<?> updateItem(@PathVariable("id") int itemId)
 	{
-		LOGGER.info("Path:/fooditems/updateitem/{id}");
+		LOGGER.info("Path:http://localhost:8081//fooditems/updateitem/{id}");
 		LOGGER.info("updateItem method is started");
 		foodItemsService.updateItem(itemId);
 		ResponseEntity<String> responseEntity = new ResponseEntity<>("Item updated Successfully",HttpStatus.OK);

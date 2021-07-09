@@ -8,6 +8,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 @Entity
 @Table(name="ORDERITEM_TBL")
 public class OrderItem {
@@ -18,35 +20,46 @@ public class OrderItem {
 	
 	private int quantity;
 	
-	@OneToOne
-	private FoodItem foodItem;
-	
 	@ManyToOne
+	@JsonBackReference
 	private Order order;
-	
-	@ManyToOne
-	private Customer customer;
 
-	public Customer getCustomer() {
-		return customer;
-	}
+    @OneToOne
+	private FoodItem foodItem;
 
-	public void setCustomer(Customer customer) {
-		this.customer = customer;
-	}
-
+	/**
+	 * This method is to get Id.
+	 * @return
+	 * 09-Jul-2021
+	 */
 	public int getId() {
 		return id;
 	}
 
+	/**
+	 * This method is to set Id.
+	 * @param id
+	 * 09-Jul-2021
+	 */
 	public void setId(int id) {
 		this.id = id;
 	}
 
+	/**
+	 * This method is to get quantity.
+	 * @return
+	 * 09-Jul-2021
+	 */
 	public int getQuantity() {
 		return quantity;
 	}
 
+	
+	/**
+	 * This method is to set quality.
+	 * @param quantity
+	 * 09-Jul-2021
+	 */
 	public void setQuantity(int quantity) {
 		this.quantity = quantity;
 	}
@@ -60,10 +73,23 @@ public class OrderItem {
 		this.foodItem = foodItem;
 	}
 
+	
+	/**
+	 * This method is to get order.
+	 * @return
+	 * 09-Jul-2021
+	 */
 	public Order getOrder() {
 		return order;
 	}
 
+
+
+	/**
+	 * This method is to set order.
+	 * @param order
+	 * 09-Jul-2021
+	 */
 	public void setOrder(Order order) {
 		this.order = order;
 	}

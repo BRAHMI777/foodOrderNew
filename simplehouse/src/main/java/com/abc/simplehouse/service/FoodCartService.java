@@ -19,7 +19,7 @@ public interface FoodCartService {
 	 * 
 	 * @param cart
 	 */
-	public void save(FoodCart cart);
+	public void save(int customerId);
 
 	/**
 	 * getById-"This method is used to get cart by id"

@@ -82,8 +82,8 @@ public class OrderItemServiceImpl implements OrderItemService {
 			customer=optionalCustomer.get();
 		
 		orderItem.setOrder(order);
-		orderItem.setFoodItem(foodItem);
-		orderItem.setCustomer(customer);
+//		orderItem.setFoodItem(foodItem);
+//		orderItem.setCustomer(customer);
 		orderItem.setQuantity(orderItemPayload.getQuantity());
 		
 		

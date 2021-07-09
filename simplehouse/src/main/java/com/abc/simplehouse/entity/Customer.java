@@ -5,6 +5,8 @@ import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
@@ -15,6 +17,7 @@ import javax.persistence.Table;
 public class Customer {
 	
 	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
 	private int customerId;
 	private String customerName;
 	private String address;
@@ -22,14 +25,12 @@ public class Customer {
 	private String phoneNumber;
 	private String customerPassword;
 	
-	@OneToOne
+	@OneToOne(cascade = CascadeType.ALL)
 	private FoodCart cart;
 	
 	@OneToMany(mappedBy="customer",cascade=CascadeType.ALL)
     private List<Order> order=new ArrayList<>();
-	
-	@OneToMany(mappedBy="customer",cascade=CascadeType.ALL)
-	private List<OrderItem> orderItem=new ArrayList<>();
+
 	
 	public FoodCart getCart() {
 		return cart;

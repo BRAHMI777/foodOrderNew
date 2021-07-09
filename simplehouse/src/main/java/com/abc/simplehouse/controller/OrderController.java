@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.abc.simplehouse.entity.Order;
-import com.abc.simplehouse.payload.OrderPayload;
+import com.abc.simplehouse.payload.CartPayload;
 import com.abc.simplehouse.service.OrderService;
 
 @RestController
@@ -34,12 +34,12 @@ public class OrderController {
 	 * @param order
 	 * 06-Jul-2021
 	 */
-	@PostMapping("/addorder")
-	public ResponseEntity<?> createOrder(@RequestBody OrderPayload orderPayload)
+	@PostMapping("/checkout")
+	public ResponseEntity<?> createOrder(@RequestBody CartPayload cartPayload)
 	{
-		LOGGER.info("Path:/order/addorder");
+		LOGGER.info("Path:/order/checkout");
 		LOGGER.info("createorder method is started");
-		orderService.createOrder(orderPayload);
+		orderService.createOrder(cartPayload.getFoodCartId(),cartPayload.getPaymentAmount());
 		ResponseEntity<String> responseEntity=new ResponseEntity<>("Order created successfully.",HttpStatus.CREATED);
 		LOGGER.info("createOrder method is started");
 		return responseEntity;
@@ -93,5 +93,11 @@ public class OrderController {
 		LOGGER.info("updateOrderById method is started");
 		return new ResponseEntity<>("Order updated successfully.",HttpStatus.OK);
 	}
-
+	
+	@GetMapping("/orderstatus/{id}")
+	public String getOrderStatus(@PathVariable("id") int orderId)
+	{
+		String status=orderService.getOrderStatus(orderId);
+		return status;
+	}
 }
