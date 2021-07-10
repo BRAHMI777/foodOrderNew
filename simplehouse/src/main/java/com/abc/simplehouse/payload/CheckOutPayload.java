@@ -7,7 +7,7 @@ package com.abc.simplehouse.payload;
  * @author BrahmanandaReddy
  * 09-Jul-2021
  */
-public class CartPayload {
+public class CheckOutPayload {
 	
 	private int foodCartId;
 	private double paymentAmount;

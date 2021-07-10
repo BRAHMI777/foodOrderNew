@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.abc.simplehouse.entity.CartItems;
+import com.abc.simplehouse.entity.CartItem;
 import com.abc.simplehouse.payload.CartItemsPayload;
 import com.abc.simplehouse.service.CartItemService;
 
@@ -40,7 +40,7 @@ public class CartItemController {
 	public ResponseEntity<String> addItem(@RequestBody CartItemsPayload cartItemsPayload) {
 		LOGGER.info("Path:/cartitems/additemstocart");
 		LOGGER.info("Save cart items method is started");
-		cartItemsService.save(cartItemsPayload);
+		cartItemsService.save(cartItemsPayload.getFoodCartId(),cartItemsPayload.getFoodItemId(),cartItemsPayload.getQuantity());
 		ResponseEntity<String> responseEntity = new ResponseEntity<>("Cart Items saved successfully",
 				HttpStatus.CREATED);
 		LOGGER.info("save cart items method is successfully");
@@ -48,10 +48,10 @@ public class CartItemController {
 	}
 
 	@GetMapping("/{id}")
-	public Optional<CartItems> fetchById(@PathVariable("id") int cartItemId) {
+	public Optional<CartItem> fetchById(@PathVariable("id") int cartItemId) {
 		LOGGER.info("Path:/cartitems/{id}");
 		LOGGER.info("GetById method is started");
-		Optional<CartItems> cartitems = cartItemsService.getById(cartItemId);
+		Optional<CartItem> cartitems = cartItemsService.getById(cartItemId);
 		LOGGER.info("GetById method is successfully completed");
 		return cartitems;
 	}
@@ -68,7 +68,7 @@ public class CartItemController {
 	}
 
 	@PutMapping("/updateitem/{id}")
-	public ResponseEntity<String> updateCartItems(@PathVariable("id") CartItems cartItemId) {
+	public ResponseEntity<String> updateCartItems(@PathVariable("id") CartItem cartItemId) {
 		LOGGER.info("Path:/cartitems/updatecartitems/{id}");
 		LOGGER.info("updateCartItems method is started");
 		cartItemsService.updateCartItems(cartItemId);

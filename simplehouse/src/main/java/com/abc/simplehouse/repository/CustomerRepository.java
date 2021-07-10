@@ -11,6 +11,7 @@ import org.springframework.data.jpa.repository.Query;
 import com.abc.simplehouse.entity.Customer;
 
 /**
+ * 
  * @author midhh
  *
  */

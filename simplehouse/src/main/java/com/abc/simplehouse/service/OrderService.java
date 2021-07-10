@@ -6,6 +6,11 @@ import java.util.Optional;
 import com.abc.simplehouse.entity.Order;
 import com.abc.simplehouse.exceptions.OrderNotFoundException;
 
+/**
+ * This class is used for implementing all service methods.
+ * @author BrahmanandaReddy
+ * 10-Jul-2021
+ */
 public interface OrderService {
 	
 	/**

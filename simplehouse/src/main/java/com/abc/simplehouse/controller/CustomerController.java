@@ -21,6 +21,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.abc.simplehouse.entity.Customer;
 import com.abc.simplehouse.exceptions.CustomerAlreadyExistsException;
+import com.abc.simplehouse.payload.ForgetPassword;
+import com.abc.simplehouse.payload.ResetPassword;
 import com.abc.simplehouse.service.CustomerService;
 
 /**
@@ -83,5 +85,27 @@ public class CustomerController {
 
 		return customer;
 	}
+	
+	@PostMapping("/forgotpassword")
+	public ResponseEntity<?> forgotPassword(@RequestBody ForgetPassword forgetPassword)  {	
+		LOGGER.info("Path:/customer/update");
+		LOGGER.info("Update customer details method is started");
+		customerService.forgetPassword(forgetPassword.getCustomerEmail(),forgetPassword.getPassword(),forgetPassword.getReEnterPassword());
+		
+		ResponseEntity<String> responseEntity= new ResponseEntity<>("Password changed successfully.",HttpStatus.CREATED);
+		LOGGER.info("Password changed successfully.");
+		return responseEntity;
+	}
 
+	
+	@PostMapping("/resetpassword")
+	public ResponseEntity<?> resetPassword(@RequestBody ResetPassword resetPassword)  {	
+		LOGGER.info("Path:/customer/update");
+		LOGGER.info("Update customer details method is started");
+		customerService.resetPassword(resetPassword.getCustomerEmail(),resetPassword.getPassword(),resetPassword.getNewPassword());
+		
+		ResponseEntity<String> responseEntity= new ResponseEntity<>("Password resetted successfully.",HttpStatus.CREATED);
+		LOGGER.info("Password resetted successfully.");
+		return responseEntity;
+	}
 }

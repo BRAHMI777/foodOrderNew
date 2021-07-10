@@ -15,7 +15,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import com.abc.simplehouse.entity.CartItems;
+import com.abc.simplehouse.entity.CartItem;
 import com.abc.simplehouse.entity.FoodCart;
 import com.abc.simplehouse.exceptions.CartItemNotFoundException;
 import com.abc.simplehouse.exceptions.CartNotFoundException;
@@ -35,7 +35,7 @@ public class CartItemsServiceTest {
 
 	@Test
 	public void testSave() {
-		CartItems cartItems = new CartItems();
+		CartItem cartItems = new CartItem();
 		cartItems.getId();
 		cartItems.getQuantity();
 		//cartItemServiceImpl.save(cartItems);
@@ -44,10 +44,10 @@ public class CartItemsServiceTest {
 
 	@Test
 	public void testGetById() {
-		CartItems cartItems = new CartItems();
+		CartItem cartItems = new CartItem();
 		cartItems.setId(3);
 		cartItems.setQuantity(1);
-		Optional<CartItems> optionalCartItems = Optional.of(cartItems);
+		Optional<CartItem> optionalCartItems = Optional.of(cartItems);
 		when(cartItemRepository.findById(3)).thenReturn(optionalCartItems);
 		assertEquals(cartItems.getId(), cartItems.getId());
 	}
@@ -55,19 +55,19 @@ public class CartItemsServiceTest {
 	@Test
 	public void testDeleteCartItems() {
 
-		CartItems cartItems = new CartItems();
+		CartItem cartItems = new CartItem();
 		cartItems.setId(3);
 		cartItems.setQuantity(1);
-		Optional<CartItems> optionalCartItems = Optional.of(cartItems);
+		Optional<CartItem> optionalCartItems = Optional.of(cartItems);
 		when(cartItemRepository.findById(cartItems.getId())).thenReturn(optionalCartItems);
 		cartItemServiceImpl.deleteCartItems(cartItems.getId());
 
 	}
 
 	@Test
-	public CartItems testUpdateCartItems() {
+	public CartItem testUpdateCartItems() {
 
-		CartItems cartItems = new CartItems();
+		CartItem cartItems = new CartItem();
 		cartItems.setId(4);
 		cartItems.setQuantity(2);
 

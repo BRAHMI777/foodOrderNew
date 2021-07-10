@@ -27,7 +27,7 @@ public class FoodCart {
 	private Customer customer;
 	
 	@OneToMany(mappedBy="foodCart",cascade=CascadeType.ALL)
-	private List<CartItems> cartItems=new ArrayList<>();
+	private List<CartItem> cartItems=new ArrayList<>();
 
 	public int getCartId() {
 		return cartId;
@@ -45,11 +45,11 @@ public class FoodCart {
 		this.customer = customer;
 	}
 
-	public List<CartItems> getCartItems() {
+	public List<CartItem> getCartItems() {
 		return cartItems;
 	}
 
-	public void setCartItems(List<CartItems> cartItems) {
+	public void setCartItems(List<CartItem> cartItems) {
 		this.cartItems = cartItems;
 	}
 	

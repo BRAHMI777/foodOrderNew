@@ -31,9 +31,9 @@ public class Order {
 	
 	private double totalCost;
 	
-	//private int totalQuantity;
-
-	
+//	private int totalQuantity;
+//
+//	
 //	public int getTotalQuantity() {
 //		return totalQuantity;
 //	}

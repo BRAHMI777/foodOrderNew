@@ -182,4 +182,16 @@ public class GlobalExceptionHandler {
 		return new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
 	}
 	
+	/**
+	 * This method handles PasswordMismatchException.
+	 * @param e
+	 * @return ResponseEntity
+	 * 06-Jul-2021
+	 */
+	@ExceptionHandler(PasswordMismatchException.class)
+	public ResponseEntity<?> PasswordMismatchException(Exception e)
+	{
+		return new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
+	}
+	
 }

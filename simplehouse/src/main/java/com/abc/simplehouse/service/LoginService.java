@@ -4,8 +4,6 @@
 package com.abc.simplehouse.service;
 
 import com.abc.simplehouse.entity.Customer;
-import com.abc.simplehouse.entity.Login;
-import com.abc.simplehouse.exceptions.InvalidCustomerException;
 
 /**
  * @author midhh

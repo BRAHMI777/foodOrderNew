@@ -40,6 +40,19 @@ public interface CustomerService {
 	 * @param customer
 	 * @throws CustomerNotFoundException
 	 */
+	public void forgetPassword(String customerEmail,String password,String reEnterPassword) throws CustomerNotFoundException;
+	
+	/**
+	 * This Method is used to update customer details.
+	 * @param customer
+	 * @throws CustomerNotFoundException
+	 */
+	public void resetPassword(String customerEmail,String password,String newPassword) throws CustomerNotFoundException;
+	/**
+	 * This Method is used to update customer details.
+	 * @param customer
+	 * @throws CustomerNotFoundException
+	 */
 	public void updateCustomer(int customerId) throws CustomerNotFoundException;
 	
 	/**

@@ -12,8 +12,10 @@ import org.springframework.stereotype.Service;
 
 import com.abc.simplehouse.entity.Customer;
 import com.abc.simplehouse.entity.FoodCart;
+import com.abc.simplehouse.exceptions.CredentialsNotValidException;
 import com.abc.simplehouse.exceptions.CustomerAlreadyExistsException;
 import com.abc.simplehouse.exceptions.CustomerNotFoundException;
+import com.abc.simplehouse.exceptions.PasswordMismatchException;
 import com.abc.simplehouse.repository.CustomerRepository;
 import com.abc.simplehouse.service.CustomerService;
 
@@ -149,6 +151,48 @@ public class CustomerServiceImpl implements CustomerService{
 			customerRepository.save(customer);
 			LOGGER.info("Updated the Customer details successfully");
 			
+		}
+		
+	}
+
+	@Override
+	public void forgetPassword(String customerEmail, String password, String reEnterPassword)
+			throws CustomerNotFoundException {
+		
+		Optional<Customer> optionalCustomer = customerRepository.findByCustomerEmail(customerEmail);
+		if(optionalCustomer.isEmpty()) 			
+			throw new CustomerNotFoundException("Cannot find customer with this email: "+customerEmail);
+		Customer customer=optionalCustomer.get();
+		
+		if(password.equals(reEnterPassword))
+		{
+			customer.setCustomerPassword(reEnterPassword);
+			customerRepository.save(customer);
+		}
+		else
+		{
+			throw new PasswordMismatchException("Password and re-Enter password mismatches. Please enter same password.");
+		}
+	
+	}
+
+	@Override
+	public void resetPassword(String customerEmail, String password, String newPassword)
+			throws CustomerNotFoundException {
+		
+		Optional<Customer> optionalCustomer = customerRepository.findByCustomerEmail(customerEmail);
+		if(optionalCustomer.isEmpty()) 			
+			throw new CustomerNotFoundException("Cannot find customer with this email: "+customerEmail);
+		Customer customer=optionalCustomer.get();
+		if(customer.getCustomerPassword().equals(password))
+		{
+			customer.setCustomerPassword(newPassword);
+			customerRepository.save(customer);
+			
+		}
+		else
+		{
+			throw new CredentialsNotValidException("Customer email and password mismatches. Please try with correct credentials.");
 		}
 		
 	}

@@ -8,13 +8,14 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.abc.simplehouse.entity.CartItems;
+import com.abc.simplehouse.entity.CartItem;
 import com.abc.simplehouse.entity.Customer;
 import com.abc.simplehouse.entity.FoodCart;
 import com.abc.simplehouse.entity.FoodItem;
 import com.abc.simplehouse.entity.Order;
 import com.abc.simplehouse.entity.OrderItem;
 import com.abc.simplehouse.entity.Payment;
+import com.abc.simplehouse.exceptions.CartItemNotFoundException;
 import com.abc.simplehouse.exceptions.CartNotFoundException;
 import com.abc.simplehouse.exceptions.OrderNotFoundException;
 import com.abc.simplehouse.repository.CartItemRepository;
@@ -61,15 +62,17 @@ public class OrderServiceImpl implements OrderService {
 		
 		Customer customer=foodCart.getCustomer();
 		
-		List<CartItems> cartItemsList=foodCart.getCartItems();
+		List<CartItem> cartItemsList=foodCart.getCartItems();
+		if(cartItemsList.size()<=0)
+			throw new CartItemNotFoundException("Please add atleast one food item to place order");
 		double totalCost=0;
-		Iterator<CartItems> i=cartItemsList.iterator();
+		Iterator<CartItem> i=cartItemsList.iterator();
 	
 		List<OrderItem> orderItemList=new ArrayList<>();
 		while(i.hasNext())
 		{	
 			OrderItem orderItem=new OrderItem();
-			CartItems cartItem=i.next();
+			CartItem cartItem=i.next();
 			FoodItem foodItem=cartItem.getFoodItem();
 			totalCost=totalCost+(foodItem.getItemPrice()*cartItem.getQuantity());
 			orderItem.setFoodItem(foodItem);

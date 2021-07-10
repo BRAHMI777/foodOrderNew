@@ -17,7 +17,6 @@ import com.abc.simplehouse.entity.Customer;
 import com.abc.simplehouse.entity.Order;
 import com.abc.simplehouse.entity.OrderItem;
 import com.abc.simplehouse.entity.Payment;
-import com.abc.simplehouse.payload.OrderPayload;
 import com.abc.simplehouse.repository.OrderRepository;
 import com.abc.simplehouse.serviceimpl.OrderServiceImpl;
 
@@ -72,7 +71,7 @@ public class OrderServiceTestCases {
                 
                 when(OrderRepository.save(order)).thenReturn(optionalOrder.get());
 
-                    OrderPayload orderPayload = new OrderPayload();
+                   // OrderPayload orderPayload = new OrderPayload();
                    //set all the values
                    
                   

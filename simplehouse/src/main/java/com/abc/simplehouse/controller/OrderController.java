@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.abc.simplehouse.entity.Order;
-import com.abc.simplehouse.payload.CartPayload;
+import com.abc.simplehouse.payload.CheckOutPayload;
 import com.abc.simplehouse.service.OrderService;
 
 @RestController
@@ -35,7 +35,7 @@ public class OrderController {
 	 * 06-Jul-2021
 	 */
 	@PostMapping("/checkout")
-	public ResponseEntity<?> createOrder(@RequestBody CartPayload cartPayload)
+	public ResponseEntity<?> createOrder(@RequestBody CheckOutPayload cartPayload)
 	{
 		LOGGER.info("Path:/order/checkout");
 		LOGGER.info("createorder method is started");
@@ -94,6 +94,11 @@ public class OrderController {
 		return new ResponseEntity<>("Order updated successfully.",HttpStatus.OK);
 	}
 	
+	/**
+	 * This method is used to get the order.
+	 * @param orderId
+	 * 06-Jul-2021
+	 */
 	@GetMapping("/orderstatus/{id}")
 	public String getOrderStatus(@PathVariable("id") int orderId)
 	{

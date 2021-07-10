@@ -17,7 +17,7 @@ import javax.persistence.Table;
 public class Customer {
 	
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int customerId;
 	private String customerName;
 	private String address;

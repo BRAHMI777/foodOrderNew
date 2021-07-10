@@ -14,7 +14,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 
 @Entity
 @Table(name="CARTITEMS_TBL")
-public class CartItems {
+public class CartItem {
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)

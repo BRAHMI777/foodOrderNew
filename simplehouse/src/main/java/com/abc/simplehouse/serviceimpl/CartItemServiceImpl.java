@@ -10,13 +10,12 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.abc.simplehouse.entity.CartItems;
+import com.abc.simplehouse.entity.CartItem;
 import com.abc.simplehouse.entity.FoodCart;
 import com.abc.simplehouse.entity.FoodItem;
 import com.abc.simplehouse.exceptions.CartItemNotFoundException;
 import com.abc.simplehouse.exceptions.CartNotFoundException;
 import com.abc.simplehouse.exceptions.ItemNotFoundException;
-import com.abc.simplehouse.payload.CartItemsPayload;
 import com.abc.simplehouse.repository.CartItemRepository;
 import com.abc.simplehouse.repository.FoodCartRepository;
 import com.abc.simplehouse.repository.FoodItemRepository;
@@ -45,49 +44,40 @@ public class CartItemServiceImpl implements CartItemService {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void save(CartItemsPayload cartItemsPayload) {
+	public void save(int foodCartId,int foodItemId,int quantity) {
 		LOGGER.info("Save method for cart items is started");
 		//Optional<CartItems> op = cartItemsRepository.findById(cartItems.getId());
 		//if (op.isEmpty()) {
 		
-		Optional<FoodItem> OptionalFoodItem=foodItemRepository.findById(cartItemsPayload.getFoodItemId());
+		Optional<FoodItem> OptionalFoodItem=foodItemRepository.findById(foodItemId);
 		FoodItem foodItem;
 		if(OptionalFoodItem.isPresent())
 			foodItem=OptionalFoodItem.get();
 		else
-			throw new ItemNotFoundException("Item not found with foodItem id "+cartItemsPayload.getFoodItemId() );
+			throw new ItemNotFoundException("Item not found with foodItem id "+foodItemId);
 		
 		
-		Optional<FoodCart> optionalFoodCart=foodCartRepository.findById(cartItemsPayload.getFoodCartId());
+		Optional<FoodCart> optionalFoodCart=foodCartRepository.findById(foodCartId);
 		if(optionalFoodCart.isEmpty())
-			throw new CartNotFoundException("Cart not available with this id "+cartItemsPayload.getFoodCartId());
+			throw new CartNotFoundException("Cart not available with this id "+foodCartId);
 		FoodCart foodCart=optionalFoodCart.get();
 			
-		CartItems cartItems=new CartItems();
-		cartItems.setQuantity(cartItemsPayload.getQuantity());
+		CartItem cartItems=new CartItem();
+		cartItems.setQuantity(quantity);
 		cartItems.setFoodCart(foodCart);
 		cartItems.setFoodItem(foodItem);
 			cartItemsRepository.save(cartItems);
 			LOGGER.info("CartItems saved successfully");
-
-		//} else {
-//			CartItems cartItem = op.get();
-//
-//			cartItem.setQuantity(cartItem.getQuantity() + cartItems.getQuantity());
-//			cartItemsRepository.save(cartItem);
-//			LOGGER.info("Cart items saved successfully");
-		}
-
-	//}
+	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Optional<CartItems> getById(int cartItemId) throws CartItemNotFoundException {
+	public Optional<CartItem> getById(int cartItemId) throws CartItemNotFoundException {
 		LOGGER.info("findById method is started");
-		Optional<CartItems> cartItems = cartItemsRepository.findById(cartItemId);
-		CartItems cartitems = new CartItems();
+		Optional<CartItem> cartItems = cartItemsRepository.findById(cartItemId);
+		CartItem cartitems = new CartItem();
 		if (cartItems.isEmpty()) {
 			LOGGER.error("CartItemsNotFoundEXception is encountered");
 			throw new CartItemNotFoundException("Cart Items not found with Id" + cartItemId);
@@ -107,7 +97,7 @@ public class CartItemServiceImpl implements CartItemService {
 	public void deleteCartItems(int cartItemId) throws CartItemNotFoundException {
 		LOGGER.info("deleteCartItemsById method is started");
 
-		Optional<CartItems> cartitem = cartItemsRepository.findById(cartItemId);
+		Optional<CartItem> cartitem = cartItemsRepository.findById(cartItemId);
 		if (cartitem.isEmpty()) {
 			LOGGER.error("CartItemsNotFoundException is encountered");
 
@@ -122,7 +112,7 @@ public class CartItemServiceImpl implements CartItemService {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public CartItems updateCartItems(CartItems cartItems) {
+	public CartItem updateCartItems(CartItem cartItems) {
 		LOGGER.info("updateCartItems method is started");
 		cartItemsRepository.save(cartItems);
 		LOGGER.info("cart items are updated");
