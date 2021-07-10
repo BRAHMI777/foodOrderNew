@@ -19,20 +19,20 @@ import javax.persistence.Table;
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS) 
 public class Login {
 	 @Id
-	 private int customerId;
+	 private int loginId;
 	 private String customerName;
 	 private String customerPassword;
 	/**
 	 * @return the customerId
 	 */
 	public int getCustomerId() {
-		return customerId;
+		return loginId;
 	}
 	/**
 	 * @param customerId the customerId to set
 	 */
 	public void setCustomerId(int customerId) {
-		this.customerId = customerId;
+		this.loginId = customerId;
 	}
 	/**
 	 * @return the customerName

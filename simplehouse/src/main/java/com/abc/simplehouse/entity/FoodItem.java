@@ -5,6 +5,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 /**
@@ -17,12 +18,11 @@ import javax.validation.constraints.NotNull;
 public class FoodItem {
 	
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
-	//@NotNull(message="Item Id is missing")
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int itemId;
-	@NotNull(message="Item name is missing")
+	@NotEmpty(message="Item name is missing")
 	private String itemName;
-	@NotNull(message="Item type is missing")
+	@NotEmpty(message="Item type is missing")
 	private String itemType;
 	@NotNull(message="Item price is missing")
 	private double itemPrice;

@@ -4,11 +4,14 @@ package com.abc.simplehouse.controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,28 +22,36 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.abc.simplehouse.entity.FoodItem;
+import com.abc.simplehouse.exceptions.ErrorResponse;
 import com.abc.simplehouse.service.FoodItemsService;
 
 
 
 @RestController
 @RequestMapping("/fooditems")
+@Validated
 public class FoodItemController {
 	
 	@Autowired
 	private FoodItemsService foodItemsService;
 	
+	@Autowired
+	ErrorResponse response;
+	
 	private static final Logger LOGGER =LoggerFactory.getLogger(FoodItemController.class);
 	
 	@PostMapping("/additem")
-	public ResponseEntity<String> addItem(@RequestBody FoodItem foodItem)
+	public ResponseEntity<?> addItem(@Valid @RequestBody FoodItem foodItem)
 	{
 		LOGGER.info("Path:http://localhost:8081/fooditems/additem");
 		LOGGER.info("Save Item method is started");
 		foodItemsService.save(foodItem);
 		ResponseEntity<String> responseEntity = new ResponseEntity<>("Item saved Successfully",HttpStatus.CREATED);
 		LOGGER.info("Save Item method is successfully completed");
-		return responseEntity;		
+//		response.setMsg("Please provide all mandatory details");
+//		response.setStatusCode(400);
+//		 return new ResponseEntity<>(response,HttpStatus.BAD_REQUEST);
+		return responseEntity;
 	}
 	
 	@GetMapping("/{id}")

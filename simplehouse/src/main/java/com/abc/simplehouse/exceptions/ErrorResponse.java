@@ -3,10 +3,13 @@
  */
 package com.abc.simplehouse.exceptions;
 
+import org.springframework.stereotype.Component;
+
 /**
  * @author brahmareddy
  * 05-Jul-2021
  */
+@Component
 public class ErrorResponse {
 	
 	private String msg;

@@ -44,4 +44,6 @@ public interface CartItemService {
 	 * @param cartItemId
 	 */
 	public CartItem updateCartItems(CartItem cartItems);
+
+	public void deleteAllCartItems();
 }

@@ -3,11 +3,14 @@ package com.abc.simplehouse.controller;
 import java.util.List;
 import java.util.Optional;
 
+import javax.validation.Valid;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -22,6 +25,7 @@ import com.abc.simplehouse.service.OrderService;
 
 @RestController
 @RequestMapping("/order")
+@Validated
 public class OrderController {
 	
 	@Autowired
@@ -35,11 +39,11 @@ public class OrderController {
 	 * 06-Jul-2021
 	 */
 	@PostMapping("/checkout")
-	public ResponseEntity<?> createOrder(@RequestBody CheckOutPayload cartPayload)
+	public ResponseEntity<?> createOrder(@Valid @RequestBody CheckOutPayload cartPayload)
 	{
 		LOGGER.info("Path:/order/checkout");
 		LOGGER.info("createorder method is started");
-		orderService.createOrder(cartPayload.getFoodCartId(),cartPayload.getPaymentAmount());
+		orderService.createOrder(cartPayload.getFoodCartId(),cartPayload.getPaymentAmount(),cartPayload.getDeliveryAddress());
 		ResponseEntity<String> responseEntity=new ResponseEntity<>("Order created successfully.",HttpStatus.CREATED);
 		LOGGER.info("createOrder method is started");
 		return responseEntity;

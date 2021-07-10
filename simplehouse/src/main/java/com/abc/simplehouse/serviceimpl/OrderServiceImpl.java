@@ -50,7 +50,7 @@ public class OrderServiceImpl implements OrderService {
 	 */
 	
 	@Override
-	public void createOrder(int foodCartId,double paymentAmount) {
+	public void createOrder(int foodCartId,double paymentAmount,String deliveryAdress) {
 
 		Order order=new Order();
 		
@@ -66,6 +66,7 @@ public class OrderServiceImpl implements OrderService {
 		if(cartItemsList.size()<=0)
 			throw new CartItemNotFoundException("Please add atleast one food item to place order");
 		double totalCost=0;
+		int totalQuantity=0;
 		Iterator<CartItem> i=cartItemsList.iterator();
 	
 		List<OrderItem> orderItemList=new ArrayList<>();
@@ -75,6 +76,7 @@ public class OrderServiceImpl implements OrderService {
 			CartItem cartItem=i.next();
 			FoodItem foodItem=cartItem.getFoodItem();
 			totalCost=totalCost+(foodItem.getItemPrice()*cartItem.getQuantity());
+			totalQuantity=totalQuantity+cartItem.getQuantity();
 			orderItem.setFoodItem(foodItem);
 			orderItem.setQuantity(cartItem.getQuantity());
 			orderItemList.add(orderItem);
@@ -82,8 +84,11 @@ public class OrderServiceImpl implements OrderService {
 		
 		}
 		
+		cartItemRepository.deleteAllInBatch();
+		
 		Payment payment=new Payment();
 		payment.setPaymentAmount(paymentAmount);
+		payment.setPaymentMode("Online");
 		if(paymentAmount>=totalCost)
 		{
 			payment.setPaymentStatus("success");
@@ -96,8 +101,10 @@ public class OrderServiceImpl implements OrderService {
 		
 		
 		order.setTotalCost(totalCost);
+		order.setTotalQuantity(totalQuantity);
 		order.setCustomer(customer);
 		order.setPayment(payment);
+		order.setDeliveryAdress(deliveryAdress);
 		orderRepository.save(order);
 		
 		payment.setOrder(order);
@@ -110,7 +117,8 @@ public class OrderServiceImpl implements OrderService {
 			orderItemRepository.save(orderItems);
 		}
 		
-		cartItemRepository.deleteAll();
+		
+		
 	}
 	
 	

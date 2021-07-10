@@ -16,14 +16,21 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 public class Payment {
 	
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int paymentId;
 	
 	private LocalDate paymentDate=LocalDate.now();
 	
 	private double paymentAmount;
 	private String paymentStatus;
+	private String paymentMode;
 	
+	public String getPaymentMode() {
+		return paymentMode;
+	}
+	public void setPaymentMode(String paymentMode) {
+		this.paymentMode = paymentMode;
+	}
 	@OneToOne
 	@JsonBackReference
 	private Order order;

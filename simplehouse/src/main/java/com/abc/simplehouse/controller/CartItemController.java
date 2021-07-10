@@ -5,11 +5,14 @@ package com.abc.simplehouse.controller;
 
 import java.util.Optional;
 
+import javax.validation.Valid;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -30,6 +33,7 @@ import com.abc.simplehouse.service.CartItemService;
 
 @RestController
 @RequestMapping("/cartitem")
+@Validated
 public class CartItemController {
 
 	@Autowired
@@ -37,7 +41,7 @@ public class CartItemController {
 	private static final Logger LOGGER = LoggerFactory.getLogger(CartItemController.class);
 
 	@PostMapping("/additem")
-	public ResponseEntity<String> addItem(@RequestBody CartItemsPayload cartItemsPayload) {
+	public ResponseEntity<String> addItem(@Valid @RequestBody CartItemsPayload cartItemsPayload) {
 		LOGGER.info("Path:/cartitems/additemstocart");
 		LOGGER.info("Save cart items method is started");
 		cartItemsService.save(cartItemsPayload.getFoodCartId(),cartItemsPayload.getFoodItemId(),cartItemsPayload.getQuantity());
@@ -76,5 +80,16 @@ public class CartItemController {
 				HttpStatus.OK);
 		LOGGER.info("Cart Items Updated successfully");
 		return responseEntity;
+	}
+	
+	@DeleteMapping("/deleteall")
+	public ResponseEntity<String> deleteCartItems() {
+		LOGGER.info("Path:/cartitems/deletecartitem/{id}");
+		LOGGER.info("deletecart method has started");
+		cartItemsService.deleteAllCartItems();
+		ResponseEntity<String> responseEntity = new ResponseEntity<>("Cart Items deleted Successfully", HttpStatus.OK);
+		LOGGER.info("cart items are deleted successfully");
+		return responseEntity;
+
 	}
 }

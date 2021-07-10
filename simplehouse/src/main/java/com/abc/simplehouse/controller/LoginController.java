@@ -44,7 +44,7 @@ public class LoginController {
 		
 		return  new ResponseEntity<>(customer,HttpStatus.OK);
 
-}
+		}
 		else {
 			
 			 LOGGER.info("Save method is successfully completed.");

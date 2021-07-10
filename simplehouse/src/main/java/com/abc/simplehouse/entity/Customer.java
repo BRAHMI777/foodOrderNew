@@ -11,6 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotEmpty;
 
 @Entity
 @Table(name="customer_tbl")
@@ -19,10 +20,15 @@ public class Customer {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int customerId;
+	@NotEmpty(message="Please provide your name")
 	private String customerName;
+	@NotEmpty(message="plese provide Adress")
 	private String address;
+	@NotEmpty(message="plese provide Email")
 	private String customerEmail;
+	@NotEmpty(message="plese provide Phonenumber")
 	private String phoneNumber;
+	@NotEmpty(message="plese provide Password")
 	private String customerPassword;
 	
 	@OneToOne(cascade = CascadeType.ALL)

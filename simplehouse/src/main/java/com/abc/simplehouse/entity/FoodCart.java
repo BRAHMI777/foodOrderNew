@@ -19,7 +19,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 public class FoodCart {
 	
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int cartId;
 	
 	@OneToOne

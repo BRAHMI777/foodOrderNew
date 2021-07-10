@@ -3,14 +3,19 @@
  */
 package com.abc.simplehouse.payload;
 
+import javax.validation.constraints.NotNull;
+
 /**
  * @author brahm
  * 08-Jul-2021
  */
 public class CartItemsPayload {
 	
+	@NotNull(message="Please enter quantity")
 	private int quantity;
+	@NotNull(message="Please enter FoodItem Id")
 	private int foodItemId;
+	@NotNull(message="Please enter FoodCart Id")
 	private int foodCartId;
 	
 	public int getQuantity() {

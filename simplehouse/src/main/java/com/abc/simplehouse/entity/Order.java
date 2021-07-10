@@ -22,7 +22,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 public class Order {
 	
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@NotNull(message="order id should be present")
 	private int orderId;
 
@@ -31,19 +31,28 @@ public class Order {
 	
 	private double totalCost;
 	
-//	private int totalQuantity;
-//
-//	
-//	public int getTotalQuantity() {
-//		return totalQuantity;
-//	}
-//
-//	public void setTotalQuantity(int totalQuantity) {
-//		this.totalQuantity = totalQuantity;
-//	}
+	private String deliveryAdress;
+    private int totalQuantity;
+
+	
+	public int getTotalQuantity() {
+		return totalQuantity;
+	}
+
+	public void setTotalQuantity(int totalQuantity) {
+		this.totalQuantity = totalQuantity;
+	}
 
 	public void setOrderId(int orderId) {
 		this.orderId = orderId;
+	}
+
+	public String getDeliveryAdress() {
+		return deliveryAdress;
+	}
+
+	public void setDeliveryAdress(String deliveryAdress) {
+		this.deliveryAdress = deliveryAdress;
 	}
 
 	@OneToMany(mappedBy = "order", cascade = CascadeType.ALL)

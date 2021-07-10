@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.abc.simplehouse.entity.Customer;
 import com.abc.simplehouse.exceptions.CustomerAlreadyExistsException;
+import com.abc.simplehouse.exceptions.ErrorResponse;
 import com.abc.simplehouse.payload.ForgetPassword;
 import com.abc.simplehouse.payload.ResetPassword;
 import com.abc.simplehouse.service.CustomerService;
@@ -35,6 +36,9 @@ public class CustomerController {
 	@Autowired
 	private CustomerService customerService;
 	
+	@Autowired
+	ErrorResponse response=new ErrorResponse();
+	
 	private static final Logger LOGGER =LoggerFactory.getLogger(CustomerController.class);
 	
 	@PostMapping("/signup")
@@ -42,7 +46,8 @@ public class CustomerController {
 		LOGGER.info("Path:/customer/save");
 		LOGGER.info("save method is started");
         customerService.saveCustomer(customer);
-        ResponseEntity<String> responseEntity= new ResponseEntity<>("You have registered succesfully", HttpStatus.CREATED);
+       ResponseEntity<String> responseEntity= new ResponseEntity<>("You have registered succesfully", HttpStatus.CREATED);
+      
         LOGGER.info("Save method is successfully completed.");
         return responseEntity;
     }

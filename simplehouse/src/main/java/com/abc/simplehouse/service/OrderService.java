@@ -18,7 +18,7 @@ public interface OrderService {
 	 * @param order
 	 * 06-Jul-2021
 	 */
-	public void createOrder(int foodCartId,double paymentAmount);
+	public void createOrder(int foodCartId,double paymentAmount,String deviveryAdress);
 
 	/**
 	 * This method is used to get all orders.

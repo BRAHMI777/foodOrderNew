@@ -119,4 +119,12 @@ public class CartItemServiceImpl implements CartItemService {
 		return cartItems;
 
 	}
+
+	@Override
+	public void deleteAllCartItems() {
+		LOGGER.info("updateCartItems method is started");
+		cartItemsRepository.deleteAllInBatch();
+		LOGGER.info("cart items are deleted");
+		
+	}
 }
