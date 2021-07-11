@@ -137,13 +137,14 @@ public class CustomerServiceImpl implements CustomerService{
          LOGGER.info("Update Customer details method is started");
          
 		Optional<Customer> optionalCustomer= customerRepository.findById(customerId);
-		Customer customer=optionalCustomer.get();
+
 		if(optionalCustomer.isEmpty()) {
 			
 			 LOGGER.error("CustomerNotFoundException is encountered");
 			throw new CustomerNotFoundException("Cannot Find Customer with this id: "+customerId);
 			}
 		else {
+			Customer customer=optionalCustomer.get();
 	        			
 			customer.setCustomerEmail("brahmi@gmail.com");
 			customer.setCustomerName("BRAHMA REDDY");
@@ -155,6 +156,9 @@ public class CustomerServiceImpl implements CustomerService{
 		
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public void forgetPassword(String customerEmail, String password, String reEnterPassword)
 			throws CustomerNotFoundException {
@@ -176,6 +180,9 @@ public class CustomerServiceImpl implements CustomerService{
 	
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public void resetPassword(String customerEmail, String password, String newPassword)
 			throws CustomerNotFoundException {

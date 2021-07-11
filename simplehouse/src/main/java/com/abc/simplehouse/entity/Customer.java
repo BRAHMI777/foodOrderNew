@@ -12,7 +12,11 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
 
+import org.hibernate.validator.constraints.Email;
+
+@SuppressWarnings("deprecation")
 @Entity
 @Table(name="customer_tbl")
 public class Customer {
@@ -20,15 +24,25 @@ public class Customer {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int customerId;
+	
+	
 	@NotEmpty(message="Please provide your name")
+	@Size(min=2,max=20,message="Name should contain 2 to 20 characters")
 	private String customerName;
-	@NotEmpty(message="plese provide Adress")
+	@NotEmpty(message="plese provide Address")
 	private String address;
-	@NotEmpty(message="plese provide Email")
+	
+	@NotEmpty(message="please provide Email")
+	@Email(message="Please enter valid Email")
 	private String customerEmail;
-	@NotEmpty(message="plese provide Phonenumber")
+	
+	
+	@NotEmpty(message="please provide Phonenumber")
+	@Size(min=10,max=10,message="Phone Number should contain 10 digits")
 	private String phoneNumber;
-	@NotEmpty(message="plese provide Password")
+	
+	@Size(min=4,max=8,message="Password should contain 4 to 8 characters")
+	@NotEmpty(message="please provide Password")
 	private String customerPassword;
 	
 	@OneToOne(cascade = CascadeType.ALL)

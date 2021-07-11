@@ -46,8 +46,6 @@ public class CartItemServiceImpl implements CartItemService {
 	@Override
 	public void save(int foodCartId,int foodItemId,int quantity) {
 		LOGGER.info("Save method for cart items is started");
-		//Optional<CartItems> op = cartItemsRepository.findById(cartItems.getId());
-		//if (op.isEmpty()) {
 		
 		Optional<FoodItem> OptionalFoodItem=foodItemRepository.findById(foodItemId);
 		FoodItem foodItem;
