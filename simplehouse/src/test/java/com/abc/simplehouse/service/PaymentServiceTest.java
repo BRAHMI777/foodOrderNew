@@ -40,7 +40,6 @@ public class PaymentServiceTest {
 	public void testSavePayment() {
 		Payment payment=new Payment();
 		payment.setPaymentId(150);
-		//payment.setPaymentDate(2021-07-08);
 		payment.setPaymentAmount(120);
 		payment.setPaymentStatus("success");
 		
@@ -51,7 +50,6 @@ public class PaymentServiceTest {
 	public void testFindPaymentById() {
 		Payment payment=new Payment();
 		payment.setPaymentId(150);
-		//payment.setPaymentDate(2021-07-08);
 		payment.setPaymentAmount(120);
 		payment.setPaymentStatus("success");
 		
@@ -72,27 +70,27 @@ public class PaymentServiceTest {
 	}
 	
 	
-//	@Test
-//	public void testUpdatePayment() {
-//		Payment payment=new Payment();
-//		payment.setPaymentId(150);
-//		//payment.setPaymentDate(2021-07-08);
-//		payment.setPaymentAmount(120);
-//		payment.setPaymentStatus("fail");
-//		
-//		paymentServiceImpl.updatePayment(payment);  
-//	}
+	@Test
+	public void testUpdatePayment() {
+		Payment payment=new Payment();
+		payment.setPaymentId(150);
+		payment.setPaymentAmount(120);
+		payment.setPaymentStatus("fail");
+		
+		Optional<Payment> optionalPayment = Optional.of(payment);
+		when(paymentRepository.findById(150)).thenReturn(optionalPayment);  
+	    assertEquals(120,payment.getPaymentAmount());
+	}
 	
 	@Test
 	public void testDeletePaymentbyId(){
 	Payment payment=new Payment();
 	payment.setPaymentId(150);
-	//payment.setPaymentDate(2021-07-08);
 	payment.setPaymentAmount(120);
 	payment.setPaymentStatus("success");
 	when(paymentRepository.findById(payment.getPaymentId())).thenReturn(Optional.of(payment));
 	paymentServiceImpl.deletePaymentbyId(payment.getPaymentId());
-	//verify(paymentRepository).deleteById(payment.getPaymentId());
+	verify(paymentRepository).deleteById(payment.getPaymentId());
 	}
 	
 }

@@ -16,12 +16,9 @@ public interface LoginService {
 	 * @param login
 	 * @return
 	 */
-	//public String fetchCustomerById(Login login);
-	
-	
 
      public Customer customerLogin(String customerEmail, String customerPassword);
 	
-	//public boolean resetPassword(Customer customer, String newPassword);
+
 	
 }

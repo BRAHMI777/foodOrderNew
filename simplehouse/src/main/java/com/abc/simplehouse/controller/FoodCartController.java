@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.abc.simplehouse.entity.FoodCart;
+import com.abc.simplehouse.exceptions.ErrorResponse;
 import com.abc.simplehouse.service.FoodCartService;
 
 /**
@@ -31,6 +32,10 @@ import com.abc.simplehouse.service.FoodCartService;
 public class FoodCartController {
 	@Autowired
 	private FoodCartService foodCartService;
+	
+	@Autowired
+	ErrorResponse errorResponse=new ErrorResponse();
+	
 	private static final Logger LOGGER = LoggerFactory.getLogger(FoodCartController.class);
 
 	@PostMapping("/addcart/{id}")
@@ -38,9 +43,11 @@ public class FoodCartController {
 		LOGGER.info("Path:/cart/addtocart");
 		LOGGER.info("Save cart method is started");
 		foodCartService.save(customerId);
-		ResponseEntity<String> responseEntity = new ResponseEntity<>("Cart saved successfully", HttpStatus.CREATED);
 		LOGGER.info("save cart method is successfully");
-		return responseEntity;
+		errorResponse.setMsg("Cart saved successfully.");
+		errorResponse.setStatusCode(201);
+		return new ResponseEntity<>(errorResponse,HttpStatus.CREATED);
+		
 	}
 
 	@GetMapping("/{id}")
@@ -57,9 +64,10 @@ public class FoodCartController {
 		LOGGER.info("Path:/cart/deletecart/{id}");
 		LOGGER.info("deletecart method has started");
 		foodCartService.deleteCart(foodcartId);
-		ResponseEntity<String> responseEntity = new ResponseEntity<>("Cart deleted Successfully", HttpStatus.OK);
 		LOGGER.info("cart is deleted successfully");
-		return responseEntity;
+		errorResponse.setMsg("Cart deleted Successfully");
+		errorResponse.setStatusCode(200);
+		return new ResponseEntity<>(errorResponse,HttpStatus.OK);
 
 	}
 

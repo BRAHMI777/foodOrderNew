@@ -1,6 +1,3 @@
-/**
- * 
- */
 package com.abc.simplehouse.controller;
 
 import org.slf4j.Logger;
@@ -13,7 +10,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.abc.simplehouse.entity.Customer;
+
+import com.abc.simplehouse.exceptions.ErrorResponse;
 import com.abc.simplehouse.payload.LoginPayLoad;
 import com.abc.simplehouse.service.LoginService;
 
@@ -29,6 +27,9 @@ public class LoginController {
 	@Autowired
 	private LoginService loginService;
 	
+	@Autowired
+	ErrorResponse errorResponse=new ErrorResponse();
+	
 	private static final Logger LOGGER =LoggerFactory.getLogger(LoginController.class);
 	
 	
@@ -36,21 +37,12 @@ public class LoginController {
 	public ResponseEntity<?> createLogin(@RequestBody LoginPayLoad loginPayLoad) {
 		 LOGGER.info("Path:/login/status");
 		 LOGGER.info("login method is started");
-		Customer customer = loginService.customerLogin(loginPayLoad.getCustomerEmail(),loginPayLoad.getCustomerPassword());
+		loginService.customerLogin(loginPayLoad.getCustomerEmail(),loginPayLoad.getCustomerPassword());
 		
-		//System.out.println(customer);
+		LOGGER.info("Login is successfull");
+		errorResponse.setMsg("Login is successfull");
+		errorResponse.setStatusCode(200);
+		 return new ResponseEntity<>(errorResponse,HttpStatus.OK);
 		
-		if(customer != null) {
-		
-		return  new ResponseEntity<>(customer,HttpStatus.OK);
-
-		}
-		else {
-			
-			 LOGGER.info("Save method is successfully completed.");
-			return new ResponseEntity<>("Invalid Email/password. Please try with correct credentials.",HttpStatus.OK);
-			
-		}
-	
-}
+	}	
 }

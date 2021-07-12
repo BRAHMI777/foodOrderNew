@@ -34,7 +34,7 @@ public interface FoodItemsService {
 	 * @param foodItemName
 	 * @return FoodItemModel 
 	 */
-	//public FoodItem getByName(String foodItemName);
+	public FoodItem getByName(String foodItemName);
 
 	
 	/**

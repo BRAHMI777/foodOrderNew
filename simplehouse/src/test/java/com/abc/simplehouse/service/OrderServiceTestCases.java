@@ -22,7 +22,7 @@ import com.abc.simplehouse.serviceimpl.OrderServiceImpl;
 
 
 /**
- * @author lavan
+ * @author BrahmanandaReddy
  *
  */
 @SpringBootTest
@@ -34,50 +34,36 @@ public class OrderServiceTestCases {
 	        @InjectMocks
 	        private OrderServiceImpl OrderServiceImpl;
 	        
-	        @InjectMocks
-	        private OrderService orderService;
 
            @Test
             public void testCreateOrder() {
                 
                 Customer customer = new Customer();
                 customer.setCustomerId(111);
-                customer.setCustomerName("dfkj"); 
-                //set other fields
-
+                customer.setCustomerName("Raja"); 
+   
                 Payment payment = new Payment();
                 payment.setPaymentId(10);
-                //set other fields
-
+      
                 OrderItem item1 = new OrderItem();
                 item1.setId(1);
-                //set other fields
-                
-            OrderItem item2 = new OrderItem();
+         
+                OrderItem item2 = new OrderItem();
                 item2.setId(2);
-                //set other fields
-
-
+      
                  List<OrderItem> list=new ArrayList<>();
                  list.add(item1);
                  list.add(item2);
 
-            Order order=new Order();
-            order.setId(1001);
-                order.setTotalCost(5000);
-                order.setOrderDate(LocalDate.now());
-                order.setCustomer(customer);
-                Optional<Order> optionalOrder = Optional.of(order);    
+                 Order order=new Order();
+                 order.setId(1001);
+                 order.setTotalCost(5000);
+                 order.setOrderDate(LocalDate.now());
+                 order.setCustomer(customer);
+                 Optional<Order> optionalOrder = Optional.of(order);    
                 
-                when(OrderRepository.save(order)).thenReturn(optionalOrder.get());
-
-                   // OrderPayload orderPayload = new OrderPayload();
-                   //set all the values
-                   
-                  
-                   //orderService.createOrder(orderPayload);    
-                   
-               assertEquals(customer,optionalOrder.get().getCustomer());
+                 when(OrderRepository.save(order)).thenReturn(optionalOrder.get());         
+                 assertEquals(customer,optionalOrder.get().getCustomer());
 
 
            }
@@ -97,30 +83,19 @@ public class OrderServiceTestCases {
 	        	    order2.setId(170);
 	        	    order2.setTotalCost(100);
 
-	        	       
+	        	    List<Order> orders = new ArrayList<Order>();
+	        	      orders.add(order);
+	                  orders.add(order1);
+	                  orders.add(order2);
 
-	        	               List<Order> orders = new ArrayList<Order>();
-
-	        	               orders.add(order);
-
-	        	               orders.add(order1);
-
-	        	               orders.add(order2);
-
-	        	     
-
-	        	          when(OrderRepository.findAll()).thenReturn(orders);
-	        	               List<Order> productList = OrderServiceImpl.fetchAllOrders();
-                                assertEquals(3,orders.size());
-    	
-	        	
+	     	          when(OrderRepository.findAll()).thenReturn(orders);
+                      assertEquals(3,orders.size());	
 	        }
 	        
 	        @Test
 	        public void testfingById(){
 	        	Order order=new Order();
 	        	order.setId(150);
-	        	//payment.setPaymentDate(2021-07-08);
 	        	order.setTotalCost(120);
 	        	Optional<Order> optionalOrder = Optional.of(order);
 	        	when(OrderRepository.findById(150)).thenReturn(optionalOrder);
@@ -129,15 +104,13 @@ public class OrderServiceTestCases {
 
 	        
 
-//	        @Test
-//	        public Order testupdateOrderById(){
-//	        	Order order=new Order();
-//	        	order.setId(4);
-//	        	order.setTotalCost(250);
-//	        	//OrderServiceImpl.updateOrderById(Order);
-//	            OrderRepository.findById(4);
-//	            order.setId(4);
-//	            return OrderRepository.save(order);
-//	        	
-	       // }
+	        @Test
+	        public void testupdateOrderById(){
+	          	Order order=new Order();
+	        	order.setOrderId(4);
+	        	order.setTotalCost(250);
+	        	Optional<Order> optionalOrder = Optional.of(order);
+	        	when(OrderRepository.findById(4)).thenReturn(optionalOrder);
+	        	OrderServiceImpl.updateOrderById(order.getOrderId());	
+	        }
 	}

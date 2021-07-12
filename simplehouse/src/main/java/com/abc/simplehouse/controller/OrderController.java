@@ -20,9 +20,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.abc.simplehouse.entity.Order;
+import com.abc.simplehouse.exceptions.ErrorResponse;
 import com.abc.simplehouse.payload.CheckOutPayload;
 import com.abc.simplehouse.service.OrderService;
 
+/**
+ * This Class is used to call the service.
+ * @author BrahmanandaReddy
+ * 11-Jul-2021
+ */
 @RestController
 @RequestMapping("/order")
 @Validated
@@ -30,6 +36,9 @@ public class OrderController {
 	
 	@Autowired
 	private OrderService orderService;
+	
+	@Autowired
+	ErrorResponse errorResponse=new ErrorResponse();
 	
 	private static final Logger LOGGER =LoggerFactory.getLogger(FoodItemController.class);
 	
@@ -39,14 +48,16 @@ public class OrderController {
 	 * 06-Jul-2021
 	 */
 	@PostMapping("/checkout")
-	public ResponseEntity<?> createOrder(@Valid @RequestBody CheckOutPayload cartPayload)
+	public ResponseEntity<ErrorResponse> createOrder(@Valid @RequestBody CheckOutPayload cartPayload)
 	{
 		LOGGER.info("Path:/order/checkout");
 		LOGGER.info("createorder method is started");
 		orderService.createOrder(cartPayload.getFoodCartId(),cartPayload.getPaymentAmount(),cartPayload.getDeliveryAddress());
-		ResponseEntity<String> responseEntity=new ResponseEntity<>("Order created successfully.",HttpStatus.CREATED);
 		LOGGER.info("createOrder method is started");
-		return responseEntity;
+		errorResponse.setMsg("Order created successfully.");
+		errorResponse.setStatusCode(201);
+		return new ResponseEntity<>(errorResponse,HttpStatus.CREATED);
+	
 	}
 	
 
@@ -95,7 +106,9 @@ public class OrderController {
 		LOGGER.info("updateOrderById method is started");
 		orderService.updateOrderById(orderId);
 		LOGGER.info("updateOrderById method is started");
-		return new ResponseEntity<>("Order updated successfully.",HttpStatus.OK);
+		errorResponse.setMsg("Order updated successfully.");
+		errorResponse.setStatusCode(200);
+		 return new ResponseEntity<>(errorResponse,HttpStatus.OK);
 	}
 	
 	/**

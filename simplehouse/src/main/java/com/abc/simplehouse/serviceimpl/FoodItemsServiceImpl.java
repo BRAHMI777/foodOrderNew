@@ -45,6 +45,12 @@ public class FoodItemsServiceImpl implements FoodItemsService {
 			throw new ItemAlreadyExistingException("This item is already existing with Id "+foodItem.getItemId());
 			
 		}
+		Optional<FoodItem> foodItemNew= Optional.ofNullable(foodItemsRepository.findByItemName(foodItem.getItemName()));
+		if(foodItemNew.isPresent())
+		{
+			LOGGER.error("ItemAlreadyExistingException is encounterd");
+			throw new ItemAlreadyExistingException("This item is already existing with this name "+foodItem.getItemName());	
+		}
 		else
 		{
 		foodItemsRepository.save(foodItem);
@@ -72,22 +78,22 @@ public class FoodItemsServiceImpl implements FoodItemsService {
 	/**
 	 * {@inheritDoc}
 	 */
-//	@Override
-//	public FoodItem getByName(String foodItemName) {
-//		Optional<FoodItem> foodItem= foodItemsRepository.findByFoodItemName(foodItemName);
-//		if(foodItem.isEmpty())
-//		{
-//			throw new ItemNotFoundException("Item Not Found With Name "+foodItemName);
-//		}
-//		else
-//		{
-//			FoodItem foodItems=new FoodItem();		
-//			foodItems=foodItem.get();
-//			return foodItems;
-//		}
-//			
-//		
-//	}
+	@Override
+	public FoodItem getByName(String foodItemName) {
+		Optional<FoodItem> foodItem= Optional.ofNullable(foodItemsRepository.findByItemName(foodItemName));
+		if(foodItem.isEmpty())
+		{
+			throw new ItemNotFoundException("Item Not Found With Name "+foodItemName);
+		}
+		else
+		{
+			FoodItem foodItems=new FoodItem();		
+			foodItems=foodItem.get();
+			return foodItems;
+		}
+			
+		
+	}
 
 	/**
 	 * {@inheritDoc}

@@ -46,12 +46,11 @@ public class FoodItemController {
 		LOGGER.info("Path:http://localhost:8081/fooditems/additem");
 		LOGGER.info("Save Item method is started");
 		foodItemsService.save(foodItem);
-		ResponseEntity<String> responseEntity = new ResponseEntity<>("Item saved Successfully",HttpStatus.CREATED);
 		LOGGER.info("Save Item method is successfully completed");
-//		response.setMsg("Please provide all mandatory details");
-//		response.setStatusCode(400);
-//		 return new ResponseEntity<>(response,HttpStatus.BAD_REQUEST);
-		return responseEntity;
+		response.setMsg("Item saved Successfully");
+		response.setStatusCode(201);
+		 return new ResponseEntity<>(response,HttpStatus.CREATED);
+	
 	}
 	
 	@GetMapping("/{id}")
@@ -78,12 +77,12 @@ public class FoodItemController {
 	
 	
 	
-//	@GetMapping("/{name}")
-//	public FoodItem fetchByName(@PathVariable("name") String foodItemName)
-//	{
-//		FoodItem foodItem= foodItemsService.getByName(foodItemName);
-//		return foodItem;
-//	}
+	@GetMapping("find/{name}")
+	public FoodItem findByName(@PathVariable("name") String foodItemName)
+	{
+		FoodItem foodItem= foodItemsService.getByName(foodItemName);
+		return foodItem;
+	}
 	
 	
 	
@@ -93,9 +92,10 @@ public class FoodItemController {
 		LOGGER.info("http://localhost:8081/deleteitem/{id}");
 		LOGGER.info("deleteItem method is started");
 		foodItemsService.deleteItem(itemId);
-		ResponseEntity<String> responseEntity = new ResponseEntity<>("Item deleted Successfully",HttpStatus.OK);
 		LOGGER.info("deleted the item is successfully");
-		return responseEntity;
+		response.setMsg("Item deleted Successfully");
+		response.setStatusCode(200);
+		 return new ResponseEntity<>(response,HttpStatus.OK);
 	}
 	
 	@PutMapping("updateitem/{id}")
@@ -103,10 +103,12 @@ public class FoodItemController {
 	{
 		LOGGER.info("Path:http://localhost:8081//fooditems/updateitem/{id}");
 		LOGGER.info("updateItem method is started");
-		foodItemsService.updateItem(itemId);
-		ResponseEntity<String> responseEntity = new ResponseEntity<>("Item updated Successfully",HttpStatus.OK);
+		foodItemsService.updateItem(itemId);		
 		LOGGER.info("Item Updated successfully");
-		return responseEntity;
+		response.setMsg("Item updated Successfully");
+		response.setStatusCode(200);
+		 return new ResponseEntity<>(response,HttpStatus.OK);
+		
 	}
 	
 	

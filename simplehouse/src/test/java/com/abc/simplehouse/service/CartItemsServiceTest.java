@@ -33,14 +33,14 @@ public class CartItemsServiceTest {
 	@InjectMocks
 	private CartItemServiceImpl cartItemServiceImpl;
 
-	@Test
-	public void testSave() {
-		CartItem cartItems = new CartItem();
-		cartItems.getId();
-		cartItems.getQuantity();
-		//cartItemServiceImpl.save(cartItems);
-
-	}
+//	@Test
+//	public void testSave() {
+//		CartItem cartItems = new CartItem();
+//		cartItems.getId();
+//		cartItems.getQuantity();
+//		//cartItemServiceImpl.save(cartItems);
+//
+//	}
 
 	@Test
 	public void testGetById() {
@@ -65,18 +65,18 @@ public class CartItemsServiceTest {
 	}
 
 	@Test
-	public CartItem testUpdateCartItems() {
+    public void testUpdateCartItems() {
 
-		CartItem cartItems = new CartItem();
-		cartItems.setId(4);
-		cartItems.setQuantity(2);
+        CartItem cartItems = new CartItem();
+        cartItems.setId(4);
+        cartItems.setQuantity(2);
+        Optional<CartItem> optionalCartItems = Optional.of(cartItems);
+        when(cartItemRepository.findById(4)).thenReturn(optionalCartItems);
+        cartItemServiceImpl.updateCartItems(cartItems);
 
-		cartItemRepository.findById(4);
-		cartItems.setId(7);
+    }
 
-		return cartItemRepository.save(cartItems);
-
-	}
+ 
 
 	@Test
 	public void testCartItemNotFoundException() {

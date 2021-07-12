@@ -207,6 +207,12 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler{
 		return new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
 	}
 	
+	/**
+	 * This method handles MethodArgumentNotValidException.
+	 * @param e
+	 * @return ResponseEntity
+	 * 06-Jul-2021
+	 */
 	@Override
 	public ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex,
 			HttpHeaders headers, HttpStatus status, WebRequest request) {
@@ -217,5 +223,30 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler{
 	body.put("errors", errors);
 	return new ResponseEntity<>(body,headers,status);		
 	}
+	
+	/**
+	 * This method handles AdminAlreadyExistingException.
+	 * @param e
+	 * @return ResponseEntity
+	 * 06-Jul-2021
+	 */
+	@ExceptionHandler(AdminAlreadyExistingException.class)
+	public ResponseEntity<?> AdminAlreadyExistingException(Exception e)
+	{
+		return new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
+	}
+	
+	/**
+	 * This method handles AdminNotFoundException.
+	 * @param e
+	 * @return ResponseEntity
+	 * 06-Jul-2021
+	 */
+	@ExceptionHandler(AdminNotFoundException.class)
+	public ResponseEntity<?> AdminNotFoundException(Exception e)
+	{
+		return new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
+	}
+	
 	
 }

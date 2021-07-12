@@ -12,8 +12,10 @@ import org.mockito.Mock;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import com.abc.simplehouse.entity.Customer;
+import com.abc.simplehouse.exceptions.CredentialsNotValidException;
 import com.abc.simplehouse.exceptions.CustomerAlreadyExistsException;
 import com.abc.simplehouse.exceptions.CustomerNotFoundException;
+import com.abc.simplehouse.exceptions.PasswordMismatchException;
 import com.abc.simplehouse.repository.CustomerRepository;
 import com.abc.simplehouse.serviceimpl.CustomerServiceImpl;
 
@@ -37,16 +39,14 @@ public class CustomerServiceTest {
 		customer.setPhoneNumber("9078776669");
 		customer.setAdress("777ygvgv");
 		customer.setCustomerPassword("xcvgyy");
-		
-		
+
 		customerServiceImpl.saveCustomer(customer);
       
 	}
 	
 	@Test
     public void TestFindCustomerById() {
-		
-		
+
        Customer customer=new Customer();
        customer.setCustomerId(150);
 		customer.setCustomerName("madhu");
@@ -56,14 +56,10 @@ public class CustomerServiceTest {
 		customer.setCustomerPassword("xcvgyy");
         
         Optional<Customer> optionalCustomer = Optional.of(customer);
-        
-        
+   
         when(customerRepository.findById(150)).thenReturn(optionalCustomer);
-        
-        
-        
-        //assertEquals(customer.getCustomerName(),customer.getCustomerName());
-        assertEquals(customer.getCustomerId(),customer.getCustomerId());
+
+        assertEquals(150,customer.getCustomerId());
       
     }
 	
@@ -75,7 +71,7 @@ public class CustomerServiceTest {
 	}
 	
 	@Test
-	public Customer testUpdateCustomer() {
+	public void testUpdateCustomer() {
 		
 		Customer customer= new Customer();
 		
@@ -86,10 +82,13 @@ public class CustomerServiceTest {
 		customer.setAdress("777ygvgv");
 		customer.setCustomerPassword("xcvgyy");
 		
-		customerRepository.findById(150);
-		customer.setCustomerId(15);
-		return customerRepository.save(customer);
-		// customerServiceImpl.updateCustomer(customer); 
+      Optional<Customer> optionalCustomer = Optional.of(customer);
+ 
+        when(customerRepository.findById(150)).thenReturn(optionalCustomer);
+
+        assertEquals(150,customer.getCustomerId());
+		 customerServiceImpl.updateCustomer(150);
+		
 		     
       
 	}
@@ -107,8 +106,7 @@ public class CustomerServiceTest {
 		customer.setCustomerPassword("xcvgyy");
 	
 	when(customerRepository.findById(customer.getCustomerId())).thenReturn(Optional.of(customer));
-	customerServiceImpl.deleteCustomerbyId(customer.getCustomerId());
-	   //verify(paymentRepository).deleteById(payment.getPaymentId());
+	customerServiceImpl.deleteCustomerbyId(150);
 	}
 	
 	
@@ -118,8 +116,77 @@ public class CustomerServiceTest {
         
         assertThrows(CustomerAlreadyExistsException.class,()->customerServiceImpl.findCustomerById(20));
 	}
+	@Test
+	public void testFindCustomerByEmail() {
+		
+		Customer customer=new Customer();
+	       customer.setCustomerId(150);
+			customer.setCustomerName("madhu");
+			customer.setCustomerEmail("madhu345@gmail.com");
+			customer.setPhoneNumber("9078776669");
+			customer.setAdress("777ygvgv");
+			customer.setCustomerPassword("xcvgyy");
+	        
+	        Optional<Customer> optionalCustomer = Optional.of(customer);
+      
+	        when(customerRepository.findByCustomerEmail("madhu345@gmail.com")).thenReturn(optionalCustomer);
 	
-	
-	
+	        assertEquals(customer.getCustomerEmail(),customer.getCustomerEmail());
+		
+		
 		
 	}
+	
+	@Test
+	public void TestforgetPassword() {
+
+		Customer customer = new Customer();
+
+		customer.setCustomerEmail("madhu@gmail.com");
+		customer.setCustomerPassword("vgftfgghb");
+		assertThrows(CustomerNotFoundException.class,() ->customerServiceImpl.forgetPassword("madhu@gmail.com", "vgftfgghb", "vgftfgghb"));
+	}
+
+	@Test
+	public void TestresetPassword() {
+		
+		Customer customer = new Customer();
+
+		customer.setCustomerEmail("madhu@gmail.com");
+		customer.setCustomerPassword("vgftfgghb");
+		customer.setCustomerPassword(customer.getCustomerPassword());
+		
+		
+		
+			
+		assertThrows(CustomerNotFoundException.class,() ->customerServiceImpl.resetPassword("madhu@gmail.com", "vgftfgghb", "vgftfgghb"));
+	}
+	
+	
+	@Test
+	public void testInvalidCredentialsException() {
+		
+		Customer customer = new Customer();
+		
+		customer.getCustomerEmail();
+		customer.getCustomerPassword();
+		when(customerRepository.save(customer)).thenThrow(CredentialsNotValidException.class);
+        
+       assertThrows(CredentialsNotValidException.class,()->customerServiceImpl.saveCustomer(customer));
+	
+}
+	
+	@Test
+	public void testPasswordMisatchException() {
+		
+		Customer customer = new Customer();
+		
+		customer.getCustomerEmail();
+		customer.getCustomerPassword();
+		when(customerRepository.save(customer)).thenThrow(PasswordMismatchException.class);
+        
+       assertThrows(PasswordMismatchException.class,()->customerServiceImpl.saveCustomer(customer));
+	
+	
+}
+}

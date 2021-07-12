@@ -37,7 +37,7 @@ public class CustomerController {
 	private CustomerService customerService;
 	
 	@Autowired
-	ErrorResponse response=new ErrorResponse();
+	ErrorResponse errorResponse=new ErrorResponse();
 	
 	private static final Logger LOGGER =LoggerFactory.getLogger(CustomerController.class);
 	
@@ -45,11 +45,11 @@ public class CustomerController {
     public ResponseEntity<?> createcustomer(@Valid @RequestBody  Customer customer) throws CustomerAlreadyExistsException {
 		LOGGER.info("Path:/customer/save");
 		LOGGER.info("save method is started");
-        customerService.saveCustomer(customer);
-       ResponseEntity<String> responseEntity= new ResponseEntity<>("You have registered succesfully", HttpStatus.CREATED);
-      
+        customerService.saveCustomer(customer);      
         LOGGER.info("Save method is successfully completed.");
-        return responseEntity;
+        errorResponse.setMsg("You have registered succesfully");
+		errorResponse.setStatusCode(201);
+		return new ResponseEntity<>(errorResponse,HttpStatus.CREATED);
     }
 	
 	@GetMapping("/find/{id}")
@@ -60,15 +60,17 @@ public class CustomerController {
 		LOGGER.info("findById method is successfully completed.");
 		return customer;
 		
-}
+	}
 	@DeleteMapping("/delete/{id}")
 	public ResponseEntity<?> deleteCustomer(@Valid @PathVariable int id){
-		LOGGER.info("Path:/customer/delete/{id}");
-		LOGGER.info("Delete customerById method is started");
-		customerService.deleteCustomerbyId(id);		
-		ResponseEntity<String> responseEntity= new ResponseEntity<>("Deleted the customer with id : "+id,HttpStatus.FOUND);
-		LOGGER.info("DeleteById method is successfully completed.");
-		return responseEntity;
+		 LOGGER.info("Path:/customer/delete/{id}");
+		 LOGGER.info("Delete customerById method is started");
+		 customerService.deleteCustomerbyId(id);		
+		 LOGGER.info("DeleteById method is successfully completed.");
+		 errorResponse.setMsg("Deleted the customer with id : "+id);
+		 errorResponse.setStatusCode(201);
+		 return new ResponseEntity<>(errorResponse,HttpStatus.FOUND);
+		
 		
 	}
 	@PutMapping("/update/{id}")
@@ -76,10 +78,10 @@ public class CustomerController {
 		LOGGER.info("Path:/customer/update");
 		LOGGER.info("Update customer details method is started");
 		customerService.updateCustomer(customerId);
-		
-		ResponseEntity<String> responseEntity= new ResponseEntity<>(" Customer Details updated ",HttpStatus.CREATED);
 		LOGGER.info("Update method is successfully completed.");
-		return responseEntity;
+		 errorResponse.setMsg("Customer Details updated.");
+		 errorResponse.setStatusCode(200);
+		 return new ResponseEntity<>(errorResponse,HttpStatus.OK);
 	}
 	
 	@GetMapping("/findbyemail/{customerEmail}")
@@ -96,10 +98,10 @@ public class CustomerController {
 		LOGGER.info("Path:/customer/update");
 		LOGGER.info("Update customer details method is started");
 		customerService.forgetPassword(forgetPassword.getCustomerEmail(),forgetPassword.getPassword(),forgetPassword.getReEnterPassword());
-		
-		ResponseEntity<String> responseEntity= new ResponseEntity<>("Password changed successfully.",HttpStatus.CREATED);
 		LOGGER.info("Password changed successfully.");
-		return responseEntity;
+	    errorResponse.setMsg("Password changed successfully.");
+		errorResponse.setStatusCode(200);
+		return new ResponseEntity<>(errorResponse,HttpStatus.OK);
 	}
 
 	
@@ -108,9 +110,9 @@ public class CustomerController {
 		LOGGER.info("Path:/customer/update");
 		LOGGER.info("Update customer details method is started");
 		customerService.resetPassword(resetPassword.getCustomerEmail(),resetPassword.getPassword(),resetPassword.getNewPassword());
-		
-		ResponseEntity<String> responseEntity= new ResponseEntity<>("Password resetted successfully.",HttpStatus.CREATED);
 		LOGGER.info("Password resetted successfully.");
-		return responseEntity;
+		 errorResponse.setMsg("Password resetted successfully.");
+		 errorResponse.setStatusCode(200);
+		 return new ResponseEntity<>(errorResponse,HttpStatus.OK);
 	}
 }

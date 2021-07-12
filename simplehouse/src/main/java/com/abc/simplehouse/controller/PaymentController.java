@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.abc.simplehouse.entity.Payment;
+import com.abc.simplehouse.exceptions.ErrorResponse;
 import com.abc.simplehouse.service.PaymentService;
 
 /**
@@ -32,6 +33,10 @@ public class PaymentController {
 	@Autowired
 	private PaymentService paymentService;
 	
+	
+	@Autowired
+	ErrorResponse errorResponse=new ErrorResponse();
+	
 	private static final Logger LOGGER =LoggerFactory.getLogger(PaymentController.class);
 	
 	@PostMapping("/save")  
@@ -40,7 +45,9 @@ public class PaymentController {
 	LOGGER.info("savePayment method is started");
 	paymentService.savePayment(payment);
 	LOGGER.info("Payment details saved successfully");
-	return new ResponseEntity<>("Payment details saved successfully",HttpStatus.ACCEPTED);
+	errorResponse.setMsg("Payment details saved successfully");
+	errorResponse.setStatusCode(201);
+	return new ResponseEntity<>(errorResponse,HttpStatus.ACCEPTED);
 	}
 	 
 	@DeleteMapping("/delete/{id}")  
@@ -49,7 +56,9 @@ public class PaymentController {
 	LOGGER.info("deletePaymentbyId method is started");
 	paymentService.deletePaymentbyId(id);
 	LOGGER.info("Payment details deleted successfully");
-	return new ResponseEntity<>("Payment deleted",HttpStatus.ACCEPTED);
+	errorResponse.setMsg("Payment details deleted successfully");
+	errorResponse.setStatusCode(200);
+	return new ResponseEntity<>(errorResponse,HttpStatus.ACCEPTED);
 	}
 	 
 	@PutMapping("/update/{id}")  
@@ -60,7 +69,10 @@ public class PaymentController {
 	paymentService.updatePayment(paymentId); 
 	
 	LOGGER.info("Payment details are updated");
-	return new ResponseEntity<>("Payment updated successfulluy",HttpStatus.ACCEPTED);
+	errorResponse.setMsg("Payment updated successfulluy");
+	errorResponse.setStatusCode(200);
+	return new ResponseEntity<>(errorResponse,HttpStatus.ACCEPTED);
+	
 	}  
 	
 	
